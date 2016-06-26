@@ -15,7 +15,7 @@ class SwiftyLine: UIView {
     var lineWidth : CGFloat = 10.0
     var lineOpacity : CGFloat = 1.0
     
-    struct line {
+    struct Line {
         var path : CGMutablePath
         var color : UIColor
         var width : CGFloat
@@ -28,10 +28,6 @@ class SwiftyLine: UIView {
             self.opacity = opacity
         }
     }
-
-    var pointCount: Int = Int()
-    var pointArray = [Int]()
-    var pathArray = [line]()
  
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -41,6 +37,22 @@ class SwiftyLine: UIView {
         super.init(frame: frame)
         self.backgroundColor = UIColor.clear()
     }
+    
+    
+    func removeLastPath() {
+        if pathArray.count > 0 {
+            pathArray.removeLast()
+        }
+        setNeedsDisplay()
+    }
+    
+    func removeAllPaths() {
+        pathArray = []
+        setNeedsDisplay()
+    }
+    
+    private var pathArray = [Line]()
+
     
     override func draw(_ rect: CGRect) {
         for line in pathArray {
@@ -63,19 +75,22 @@ class SwiftyLine: UIView {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touch = touches.first as UITouch! {
             setTouchPoints(touch, view: self)
-            pointCount = 0
+            let newLine = Line(path: CGMutablePath(), color: self.lineColor, width: self.lineWidth, opacity: self.lineOpacity)
+            pathArray.append(newLine)
         }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
          if let touch = touches.first as UITouch! {
             updateTouchPoints(touch, view: self)
-            addSubPathToPath(createSubPath(getMidPoints().0, mid2: getMidPoints().1))
+            let newLine = addSubPathToPath(createSubPath(getMidPoints().0, mid2: getMidPoints().1))
+            if let currentPath = pathArray.last {
+                currentPath.path.addPath(nil, path: newLine)
+            }
         }
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        pointArray.append(pointCount)
         print(pathArray.count)
     }
     
@@ -109,32 +124,11 @@ class SwiftyLine: UIView {
         return subpath
     }
     
-    func addSubPathToPath(_ subpath: CGMutablePath) {
+    func addSubPathToPath(_ subpath: CGMutablePath) -> CGMutablePath {
         let bounds : CGRect = subpath.boundingBox
         let drawBox : CGRect = bounds.insetBy(dx: -2.0 * lineWidth, dy: -2.0 * lineWidth)
-        let newLine = line(path: subpath, color: lineColor, width: lineWidth, opacity: lineOpacity)
-        pathArray.append(newLine)
         self.setNeedsDisplay(drawBox)
-        pointCount += 1
-    }
-    
-    func removeLastPath() {
-        if pathArray.count > 0 || pointArray.count > 0 {
-            
-            for _ in pointArray {
-                if pathArray.count > 0 {
-                    pathArray.removeLast()
-                }
-            }
-            pointArray.removeLast()
-            }
-        setNeedsDisplay()
-    }
-    
-    func removeAllPaths() {
-        pathArray = []
-        pointArray = []
-        setNeedsDisplay()
+        return subpath
     }
 }
 
