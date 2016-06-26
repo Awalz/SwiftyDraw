@@ -29,59 +29,59 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         smoothLineView = SwiftyLine(frame: mainDrawingCanvas.bounds)
         self.view.addSubview(smoothLineView)
-        self.view.bringSubviewToFront(deleteCurrentCanvasButton)
-        self.view.bringSubviewToFront(backButton)
-        self.view.bringSubviewToFront(blueColorButton)
-        self.view.bringSubviewToFront(redColorButton)
-        self.view.bringSubviewToFront(greenColorButton)
-        self.view.bringSubviewToFront(yellowColorButton)
-        self.view.bringSubviewToFront(orangeColorButton)
-        self.view.bringSubviewToFront(purpleColorButton)
-        self.view.bringSubviewToFront(lineWidthSlider)
+        self.view.bringSubview(toFront: deleteCurrentCanvasButton)
+        self.view.bringSubview(toFront: backButton)
+        self.view.bringSubview(toFront: blueColorButton)
+        self.view.bringSubview(toFront: redColorButton)
+        self.view.bringSubview(toFront: greenColorButton)
+        self.view.bringSubview(toFront: yellowColorButton)
+        self.view.bringSubview(toFront: orangeColorButton)
+        self.view.bringSubview(toFront: purpleColorButton)
+        self.view.bringSubview(toFront: lineWidthSlider)
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
-    @IBAction func deleteCurrentCanvas(sender: AnyObject) {
+    @IBAction func deleteCurrentCanvas(_ sender: AnyObject) {
         smoothLineView.removeAllPaths()
     }
     
-    @IBAction func backButton(sender: AnyObject) {
+    @IBAction func backButton(_ sender: AnyObject) {
         smoothLineView.removeLastPath()
     }
    
-    @IBAction func blueColorStroke(sender: AnyObject) {
-        smoothLineView.changeLineColor(UIColor.blueColor())
+    @IBAction func blueColorStroke(_ sender: AnyObject) {
+        smoothLineView.changeLineColor(UIColor.blue())
     }
     
-    @IBAction func redColorStroke(sender: AnyObject) {
-        smoothLineView.changeLineColor(UIColor.redColor())
+    @IBAction func redColorStroke(_ sender: AnyObject) {
+        smoothLineView.changeLineColor(UIColor.red())
     }
     
-    @IBAction func greenColorStroke(sender: AnyObject) {
-        smoothLineView.changeLineColor(UIColor.greenColor())
+    @IBAction func greenColorStroke(_ sender: AnyObject) {
+        smoothLineView.changeLineColor(UIColor.green())
     }
     
-    @IBAction func yellowColorStroke(sender: AnyObject) {
-        smoothLineView.changeLineColor(UIColor.yellowColor())
+    @IBAction func yellowColorStroke(_ sender: AnyObject) {
+        smoothLineView.changeLineColor(UIColor.yellow())
     }
     
-    @IBAction func orangeColorStroke(sender: AnyObject) {
-        smoothLineView.changeLineColor(UIColor.orangeColor())
+    @IBAction func orangeColorStroke(_ sender: AnyObject) {
+        smoothLineView.changeLineColor(UIColor.orange())
     }
     
-    @IBAction func purpleColorButton(sender: AnyObject) {
-        smoothLineView.changeLineColor(UIColor.purpleColor())
+    @IBAction func purpleColorButton(_ sender: AnyObject) {
+        smoothLineView.changeLineColor(UIColor.purple())
     }
     
-    @IBAction func valueDidChange(sender: AnyObject) {
+    @IBAction func valueDidChange(_ sender: AnyObject) {
         let newValue : Float = sender.value
         smoothLineView.changeLineWidth(CGFloat(newValue))
     }
   
-    func changeStrokeWidth(width: CGFloat) {
-        lineWidth = width
+    func changeStrokeWidth(_ width: CGFloat) {
+        smoothLineView.lineWidth = width
     }
 }

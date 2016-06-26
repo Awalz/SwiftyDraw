@@ -9,59 +9,59 @@ import UIKit
 
 class ColorPaletteButton: UIButton {
     
-    var fillColor = UIColor.whiteColor().CGColor
-    override func drawRect(rect:CGRect)
+    var fillColor = UIColor.white().cgColor
+    override func draw(_ rect:CGRect)
     {
         let context = UIGraphicsGetCurrentContext()
-        let rad = CGRectGetWidth(rect)/2-2
+        let rad = rect.width/2-2
         let endAngle = CGFloat(2*M_PI)
-        CGContextAddArc(context, CGRectGetMidX(rect), CGRectGetMidY(rect), rad, 0, endAngle, 1)
-        CGContextSetFillColorWithColor(context,fillColor)
-        CGContextSetStrokeColorWithColor(context,UIColor.blackColor().CGColor)
-        CGContextSetLineWidth(context, 3.0)
-        CGContextDrawPath(context, CGPathDrawingMode.FillStroke);
+        context?.addArc(centerX: rect.midX, y: rect.midY, radius: rad, startAngle: 0, endAngle: endAngle, clockwise: 1)
+        context?.setFillColor(fillColor)
+        context?.setStrokeColor(UIColor.black().cgColor)
+        context?.setLineWidth(3.0)
+        context?.drawPath(using: CGPathDrawingMode.fillStroke);
     }
 }
 
 class RedButton: ColorPaletteButton {
-    override func drawRect(rect: CGRect) {
-        fillColor = UIColor.redColor().CGColor
-        super.drawRect(rect)
+    override func draw(_ rect: CGRect) {
+        fillColor = UIColor.red().cgColor
+        super.draw(rect)
     }
 }
 
 class BlueButton: ColorPaletteButton {
-    override func drawRect(rect: CGRect) {
-        fillColor = UIColor.blueColor().CGColor
-        super.drawRect(rect)
+    override func draw(_ rect: CGRect) {
+        fillColor = UIColor.blue().cgColor
+        super.draw(rect)
     }
 }
 
 class GreenButton: ColorPaletteButton {
-    override func drawRect(rect: CGRect) {
-        fillColor = UIColor.greenColor().CGColor
-        super.drawRect(rect)
+    override func draw(_ rect: CGRect) {
+        fillColor = UIColor.green().cgColor
+        super.draw(rect)
     }
 }
 
 class YellowButton: ColorPaletteButton {
-    override func drawRect(rect: CGRect) {
-        fillColor = UIColor.yellowColor().CGColor
-        super.drawRect(rect)
+    override func draw(_ rect: CGRect) {
+        fillColor = UIColor.yellow().cgColor
+        super.draw(rect)
     }
 }
 
 class PurpleButton: ColorPaletteButton {
-    override func drawRect(rect: CGRect) {
-        fillColor = UIColor.purpleColor().CGColor
-        super.drawRect(rect)
+    override func draw(_ rect: CGRect) {
+        fillColor = UIColor.purple().cgColor
+        super.draw(rect)
     }
 }
 
 class OrangeButton: ColorPaletteButton {
-    override func drawRect(rect: CGRect) {
-        fillColor = UIColor.orangeColor().CGColor
-        super.drawRect(rect)
+    override func draw(_ rect: CGRect) {
+        fillColor = UIColor.orange().cgColor
+        super.draw(rect)
     }
 }
 

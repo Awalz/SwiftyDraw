@@ -48,6 +48,7 @@ To remove the last line segment drawn, use the removeLastPath() function:
 
 * Get alpha values to work
 * Extend UIColor to accept RGB and hex values
+* Add CocoaPods
 
 
 

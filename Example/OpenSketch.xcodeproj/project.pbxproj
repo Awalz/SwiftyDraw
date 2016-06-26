@@ -13,7 +13,6 @@
 		163551E81B4B084C0026D330 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 163551E61B4B084C0026D330 /* Main.storyboard */; };
 		163551EA1B4B084C0026D330 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 163551E91B4B084C0026D330 /* Assets.xcassets */; };
 		163551ED1B4B084C0026D330 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 163551EB1B4B084C0026D330 /* LaunchScreen.storyboard */; };
-		163551F81B4B084C0026D330 /* OpenSketchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163551F71B4B084C0026D330 /* OpenSketchTests.swift */; };
 		163552031B4B084C0026D330 /* OpenSketchUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163552021B4B084C0026D330 /* OpenSketchUITests.swift */; };
 		16E0EA641B4B903500F078A8 /* SwiftyLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E0EA631B4B903500F078A8 /* SwiftyLine.swift */; };
 /* End PBXBuildFile section */
@@ -45,8 +44,6 @@
 		163551EC1B4B084C0026D330 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		163551EE1B4B084C0026D330 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		163551F31B4B084C0026D330 /* OpenSketchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpenSketchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		163551F71B4B084C0026D330 /* OpenSketchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenSketchTests.swift; sourceTree = "<group>"; };
-		163551F91B4B084C0026D330 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		163551FE1B4B084C0026D330 /* OpenSketchUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpenSketchUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		163552021B4B084C0026D330 /* OpenSketchUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenSketchUITests.swift; sourceTree = "<group>"; };
 		163552041B4B084C0026D330 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -82,7 +79,6 @@
 			isa = PBXGroup;
 			children = (
 				163551E11B4B084C0026D330 /* OpenSketch */,
-				163551F61B4B084C0026D330 /* OpenSketchTests */,
 				163552011B4B084C0026D330 /* OpenSketchUITests */,
 				163551E01B4B084C0026D330 /* Products */,
 			);
@@ -111,15 +107,6 @@
 				163551EE1B4B084C0026D330 /* Info.plist */,
 			);
 			path = OpenSketch;
-			sourceTree = "<group>";
-		};
-		163551F61B4B084C0026D330 /* OpenSketchTests */ = {
-			isa = PBXGroup;
-			children = (
-				163551F71B4B084C0026D330 /* OpenSketchTests.swift */,
-				163551F91B4B084C0026D330 /* Info.plist */,
-			);
-			path = OpenSketchTests;
 			sourceTree = "<group>";
 		};
 		163552011B4B084C0026D330 /* OpenSketchUITests */ = {
@@ -194,19 +181,22 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Cashew Studio";
 				TargetAttributes = {
 					163551DE1B4B084C0026D330 = {
 						CreatedOnToolsVersion = 7.0;
 						DevelopmentTeam = DGV5BLXSF9;
+						LastSwiftMigration = 0800;
 					};
 					163551F21B4B084C0026D330 = {
 						CreatedOnToolsVersion = 7.0;
+						LastSwiftMigration = 0800;
 						TestTargetID = 163551DE1B4B084C0026D330;
 					};
 					163551FD1B4B084C0026D330 = {
 						CreatedOnToolsVersion = 7.0;
+						LastSwiftMigration = 0800;
 						TestTargetID = 163551DE1B4B084C0026D330;
 					};
 				};
@@ -274,7 +264,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				163551F81B4B084C0026D330 /* OpenSketchTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -417,13 +406,14 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = OpenSketch/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = io.bananasplit.OpenSketch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -440,12 +430,14 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = OpenSketch/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = io.bananasplit.OpenSketch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -457,6 +449,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = io.bananasplit.OpenSketchTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OpenSketch.app/OpenSketch";
 			};
 			name = Debug;
@@ -469,6 +462,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = io.bananasplit.OpenSketchTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OpenSketch.app/OpenSketch";
 			};
 			name = Release;
@@ -480,6 +474,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = io.bananasplit.OpenSketchUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = OpenSketch;
 				USES_XCTRUNNER = YES;
 			};
@@ -492,6 +487,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = io.bananasplit.OpenSketchUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = OpenSketch;
 				USES_XCTRUNNER = YES;
 			};
