@@ -53,32 +53,32 @@ class ViewController: UIViewController {
     }
    
     @IBAction func blueColorStroke(_ sender: AnyObject) {
-        smoothLineView.changeLineColor(UIColor.blue())
+        smoothLineView.lineColor = UIColor.blue()
     }
     
     @IBAction func redColorStroke(_ sender: AnyObject) {
-        smoothLineView.changeLineColor(UIColor.red())
+        smoothLineView.lineColor = UIColor.red()
     }
     
     @IBAction func greenColorStroke(_ sender: AnyObject) {
-        smoothLineView.changeLineColor(UIColor.green())
+        smoothLineView.lineColor = UIColor.green()
     }
     
     @IBAction func yellowColorStroke(_ sender: AnyObject) {
-        smoothLineView.changeLineColor(UIColor.yellow())
+        smoothLineView.lineColor = UIColor.yellow()
     }
     
     @IBAction func orangeColorStroke(_ sender: AnyObject) {
-        smoothLineView.changeLineColor(UIColor.orange())
+        smoothLineView.lineColor = UIColor.orange()
     }
     
     @IBAction func purpleColorButton(_ sender: AnyObject) {
-        smoothLineView.changeLineColor(UIColor.purple())
+        smoothLineView.lineColor = UIColor.purple()
     }
     
     @IBAction func valueDidChange(_ sender: AnyObject) {
-        let newValue : Float = sender.value
-        smoothLineView.changeLineWidth(CGFloat(newValue))
+        let newWidth : Float = sender.value
+        smoothLineView.lineWidth = CGFloat(newWidth)
     }
   
     func changeStrokeWidth(_ width: CGFloat) {

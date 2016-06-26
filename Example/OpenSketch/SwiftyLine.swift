@@ -7,29 +7,27 @@
 
 import UIKit
 
-struct line {
-    var path : CGMutablePath
-    var color : UIColor
-    var width : CGFloat
-    var opacity : CGFloat
-    
-    init(path : CGMutablePath, color: UIColor, width: CGFloat, opacity: CGFloat) {
-        self.path = path
-        self.color = color
-        self.width = width
-        self.opacity = opacity
-    }
-}
 
 
 class SwiftyLine: UIView {
     
-    var currentPoint: CGPoint = CGPoint()
-    var previousPoint : CGPoint = CGPoint()
-    var previousPreviousPoint : CGPoint = CGPoint()
     var lineColor : UIColor = UIColor.black()
     var lineWidth : CGFloat = 10.0
     var lineOpacity : CGFloat = 1.0
+    
+    struct line {
+        var path : CGMutablePath
+        var color : UIColor
+        var width : CGFloat
+        var opacity : CGFloat
+        
+        init(path : CGMutablePath, color: UIColor, width: CGFloat, opacity: CGFloat) {
+            self.path = path
+            self.color = color
+            self.width = width
+            self.opacity = opacity
+        }
+    }
 
     var pointCount: Int = Int()
     var pointArray = [Int]()
@@ -57,6 +55,10 @@ class SwiftyLine: UIView {
             context.endTransparencyLayer()
         }
     }
+    
+    private var currentPoint: CGPoint = CGPoint()
+    private var previousPoint : CGPoint = CGPoint()
+    private var previousPreviousPoint : CGPoint = CGPoint()
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touch = touches.first as UITouch! {
@@ -133,14 +135,6 @@ class SwiftyLine: UIView {
         pathArray = []
         pointArray = []
         setNeedsDisplay()
-    }
-    
-    func changeLineColor(_ color: UIColor) {
-        lineColor = color
-    }
-    
-    func changeLineWidth(_ width: CGFloat) {
-        lineWidth = width
     }
 }
 
