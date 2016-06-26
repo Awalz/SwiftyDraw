@@ -7,13 +7,11 @@
 
 import UIKit
 
-
-
 class SwiftyLine: UIView {
     
     var lineColor : UIColor = UIColor.black()
     var lineWidth : CGFloat = 10.0
-    var lineOpacity : CGFloat = 1.0
+    var lineOpacity : CGFloat = 0.4
     
     struct Line {
         var path : CGMutablePath
@@ -62,9 +60,7 @@ class SwiftyLine: UIView {
             context.setStrokeColor(line.color.cgColor)
             context.setAlpha(lineOpacity)
             context.setLineCap(CGLineCap.round)
-            context.beginTransparencyLayer(auxiliaryInfo: nil)
             context.strokePath()
-            context.endTransparencyLayer()
         }
     }
     
@@ -76,6 +72,7 @@ class SwiftyLine: UIView {
         if let touch = touches.first as UITouch! {
             setTouchPoints(touch, view: self)
             let newLine = Line(path: CGMutablePath(), color: self.lineColor, width: self.lineWidth, opacity: self.lineOpacity)
+            newLine.path.addPath(nil, path: addSubPathToPath(createSubPath(getMidPoints().0, mid2: getMidPoints().1)))
             pathArray.append(newLine)
         }
     }
