@@ -4,7 +4,7 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>OpenSketch.xcscheme</key>
+		<key>SwiftyDrawExample.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
@@ -12,17 +12,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>163551DE1B4B084C0026D330</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>163551F21B4B084C0026D330</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>163551FD1B4B084C0026D330</key>
+		<key>1671B1511DE8CBA100ED5239</key>
 		<dict>
 			<key>primary</key>
 			<true/>
