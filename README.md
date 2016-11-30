@@ -25,4 +25,4 @@ Andrew Walz, andrewjwalz@gmail.com
 
 ## License
 
-SwiftyDraw is available under the MIT license. See the LICENSE file for more info.
+SwiftyDraw  is available under the BSD license. See the LICENSE file for more info.
