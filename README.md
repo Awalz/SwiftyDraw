@@ -1,61 +1,28 @@
-#SwiftyLine
+# SwiftyDraw
 
-##A Lightweight drawing library built in Swift
-SwiftyLine is a subclass of UIView which uses Core Graphics and UIResponder to allow drawing on any canvas.
+[![Version](https://img.shields.io/cocoapods/v/SwiftyDraw.svg?style=flat)](http://cocoapods.org/pods/SwiftyDraw)
+[![License](https://img.shields.io/cocoapods/l/SwiftyDraw.svg?style=flat)](http://cocoapods.org/pods/SwiftyDraw)
+[![Platform](https://img.shields.io/cocoapods/p/SwiftyDraw.svg?style=flat)](http://cocoapods.org/pods/SwiftyDraw)
 
-#Requirements
+## Example
 
-* IOS 7.0
-* XCode 7.2
+To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
-##Usage
+## Requirements
 
-Create an instance of SwiftyLine:
+## Installation
 
-    var smoothLineView : SwiftyLine = SwiftyLine()
+SwiftyDraw is available through [CocoaPods](http://cocoapods.org). To install
+it, simply add the following line to your Podfile:
 
-Then in viewDidLoad, initialize the view(such as a UIImageView) with the frame:
+```ruby
+pod "SwiftyDraw"
+```
 
-    smoothLineView = SwiftyLine(frame: canvas.bounds)
-    
-##Features
+## Author
 
-###Color
-Line color can be changed by passing a UIColor to the **changeLineColor()** function:
+Andrew Walz, andrewjwalz@gmail.com
 
-    smoothLineView.changeLineColor(UIColor.blueColor())
+## License
 
-###Width
-Line width can be changed by passing a CGFloat to the **changeLineWidth()** function:
-
-    let width : CGFloat = 5.0
-    smoothLineView.changeLineWidth(width)    
-    
-    
-###Delete 
-
-All of the line segments drawn are stored in an array. To remove all drawn lines are clear the drawing canvas, use the **removeAllPaths()** function:
-
-    smoothLineView.removeAllPaths()
-    
-###Remove Last Path
-
-To remove the last line segment drawn, use the removeLastPath() function: 
-
-    smoothLineView.removeLastPath()
-    
-##Todo-List
-
-* Get alpha values to work
-* Extend UIColor to accept RGB and hex values
-* Add CocoaPods
-
-
-
-
-
-
-
-
-
-
+SwiftyDraw is available under the MIT license. See the LICENSE file for more info.
