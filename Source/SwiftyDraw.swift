@@ -78,8 +78,8 @@ open class SwiftyDrawView: UIView {
 
         for line in pathArray {
             context.setLineWidth(line.width)
-            context.setStrokeColor(line.color.cgColor)
             context.setAlpha(line.opacity)
+            context.setStrokeColor(line.color.cgColor)
             context.addPath(line.path)
             context.beginTransparencyLayer(auxiliaryInfo: nil)
             context.strokePath()
