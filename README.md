@@ -11,9 +11,6 @@
 
 SwiftyDraw is a simple, lightweight drawing framework written in Swift. SwiftyDraw is built using Core Gaphics and is very easy to implement.
 
-
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
-
 ## Requirements
 * iOS 8.0+
 * Swift 3.0
