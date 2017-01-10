@@ -36,78 +36,115 @@ Simply copy the contents of the Source folder into your project.
 
 ## Usage
 
-Using SwiftyDraw is very simple.
+Using SwiftyDraw is very simple:
 
 ### Getting Started:
 
 Simply create a SwiftyDrawView and add it to your View Controller:
 
-    let drawView = SwiftyDrawView(frame: self.view.frame)
-    self.view.addSubview(drawView)
+```swift
+let drawView = SwiftyDrawView(frame: self.view.frame)
+self.view.addSubview(drawView)
+```
     
 By default, the view will automatically respond to touch gestures and begin drawing. The default color is **black**.
 
-To disable color, simply set the **drawingEnabled** property to false:
+To disable drawing, simply set the `drawingEnabled` property to false:
 
-    drawView.drawingEnabled = false
+```swift
+drawView.drawingEnabled = false
+```
     
 ## Customization
 
 ### Line Color:
 
-The color of a line stoke can be changed by adjusting the **lineColor** property. SwiftyDraw accepts any UIColor:
+The color of a line stoke can be changed by adjusting the `lineColor` property. SwiftyDraw accepts any UIColor:
 
-    drawView.lineColor = UIColor.red
+```swift
+drawView.lineColor = UIColor.red
+```
     
 <p align="center">
   or
 </p>
-    drawView.lineColor = UIColor(colorLiteralRed: 0.75, green: 0.50, blue: 0.88, alpha: 1.0)
-    
+
+```swift
+drawView.lineColor = UIColor(colorLiteralRed: 0.75, green: 0.50, blue: 0.88, alpha: 1.0)
+```    
 ### Line Width:
 
-The with of a line stroke can be changed by adjusting the **lineWidth** property. SwiftyDraw accepts any positive CGFloat:
+The with of a line stroke can be changed by adjusting the `lineWidth` property. SwiftyDraw accepts any positive CGFloat:
 
-    drawView.lineWidth = CGFloat(5.0)
+```swift
+drawView.lineWidth = CGFloat(5.0)
+```
 
 ### Line Opacity:
 
-The opacity of a line stoke can be changed by adjusting the **lineOpacity** property. SwiftyDraw accepts a CGFloat between 0. and 1.0:
+The opacity of a line stoke can be changed by adjusting the `lineOpacity` property. SwiftyDraw accepts a CGFloat between 0. and 1.0:
 
-    drawView.lineOpacity = CGFloat(0.5)
+```swift
+drawView.lineOpacity = CGFloat(0.5)
+```
     
 ## Editing
 
 ### Remove Last Line:
 
-SwiftyDraw has the option to clear the last line segment. Simply call the **removeLastLine** function:
+SwiftyDraw has the option to clear the last line segment. Simply call the `removeLastLine` function:
 
-    drawView.removeLastLine()
+```swift
+drawView.removeLastLine()
+```
 
 This can be called several times, or until the canvas is clear.
 
 
 ### Clear All:
 
-If you wish to clear the entire canvas, simply call the **clearCanvas** function:
+If you wish to clear the entire canvas, simply call the `clearCanvas` function:
 
-    drawView.clearCanvas()
+```swift
+drawView.clearCanvas()
+```   
     
 ## Delegate
 
-SwiftyDraw has delegate functions to notify you when a user is interacting with a SwiftDrawView. To access these delegate methods, simply add your View Controller as the **SwiftyDrawViewDelegate**:
+SwiftyDraw has delegate functions to notify you when a user is interacting with a SwiftDrawView. To access these delegate methods, simply add your View Controller as the `SwiftyDrawViewDelegate`:
 
-    class ViewController: UIViewController, SwiftyDrawViewDelegate
+```swift
+class ViewController: UIViewController, SwiftyDrawViewDelegate
+```
     
-There are four optional delegat methods:
+There are four optional delegate methods:
 
-**SwiftyDrawDidBeginDrawing(view: SwiftyDrawView)** - Called when the SwiftyDrawView detects touches have begun.
+```swift
+func SwiftyDrawDidBeginDrawing(view: SwiftyDrawView) {
 
-**SwiftyDrawIsDrawing(view: SwiftyDrawView)** - Called when the SwiftyDrawView detects touches are currrently occuring. Will be called multiple times.
+    // Called when the SwiftyDrawView detects touches have begun.
+    
+}
+    
+func SwiftyDrawIsDrawing(view: SwiftyDrawView) { 
 
-**SwiftyDrawDidFinishDrawing(view: SwiftyDrawView)** - Called when the SwiftyDrawView detects touches have ended for the particular line segment
+	// Called when the SwiftyDrawView detects touches are currrently occuring. 
+	// Will be called multiple times.
+	
+}
+    
+func SwiftyDrawDidFinishDrawing(view: SwiftyDrawView) {
 
-**SwiftyDrawDidCancelDrawing(view: SwiftyDrawView)** - Called if SwiftyDrawView detects issues with the gesture recognizers and cancels the drawing
+	// Called when the SwiftyDrawView detects touches have ended for the particular line segment
+	
+}
+    
+func SwiftyDrawDidCancelDrawing(view: SwiftyDrawView) {
+
+	// Called if SwiftyDrawView detects issues with the gesture recognizers and cancels the drawing
+	
+}
+```
 
  
 ### Contact
