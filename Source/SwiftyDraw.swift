@@ -20,7 +20,7 @@ import UIKit
 
 /// SwiftyDrawView Delegate
 
-public protocol SwiftyDrawViewDelegate {
+public protocol SwiftyDrawViewDelegate: class {
     
     /**
      SwiftyDrawViewDelegate called when a touch gesture begins on the SwiftyDrawView.
@@ -92,7 +92,7 @@ open class SwiftyDrawView: UIView {
     public var drawingEnabled         : Bool      = true
     
     /// Public SwiftyDrawView delegate
-    public var delegate               : SwiftyDrawViewDelegate?
+    public weak var delegate          : SwiftyDrawViewDelegate?
     
     
     private var pathArray             : [Line]    = []
