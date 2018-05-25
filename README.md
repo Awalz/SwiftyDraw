@@ -1,9 +1,9 @@
 <h1 align="center">SwiftyDraw</h1>
 
 <p align="center">
-    <img src="https://img.shields.io/badge/platform-iOS%208%2B-blue.svg?style=flat" alt="Platform: iOS 8+"/>
-    <a href="https://developer.apple.com/swift"><img src="https://img.shields.io/badge/language-swift%203-4BC51D.svg?style=flat" alt="Language: Swift 3" /></a>
-    <a href="https://cocoapods.org/pods/SwiftyDraw"><img src="https://img.shields.io/cocoapods/v/SwiftyDraw.svg?style=flat" alt="CocoaPods compatible" /></a>
+    <img src="https://img.shields.io/badge/platform-iOS%209%2B-blue.svg?style=flat" alt="Platform: iOS 9.1+"/>
+    <a href="https://developer.apple.com/swift"><img src="https://img.shields.io/badge/language-swift%204-4BC51D.svg?style=flat" alt="Language: Swift 4" /></a>
+    <a href="https://cocoapods.org/pods/SwiftyDraw"><img src="https://img.shields.io/cocoapods/v/SwiftyDraw.svg?style=flat" alt="CocoaPods" /></a>
     <img src="http://img.shields.io/badge/license-BSD-lightgrey.svg?style=flat" alt="License: BSD" /> <br><br>
 </p>
 
