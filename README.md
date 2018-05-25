@@ -18,8 +18,8 @@ This is an original fork from [Awalz's SwiftyDraw](https://github.com/Awalz/Swif
 SwiftyDraw is a simple, lightweight drawing framework written in Swift. SwiftyDraw is built using Core Gaphics and is very easy to implement.
 
 ## Requirements
-* iOS 8.0+
-* Swift 3.0
+* iOS 9.1+
+* Swift 4
 
 ## License
 
