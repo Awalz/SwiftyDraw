@@ -164,28 +164,28 @@ open class SwiftyDrawView: UIView {
         delegate?.swiftyDraw(didCancelDrawingIn: self, using: touch)
     }
     
-     /// Displays paths passed by replacing all other contents with provided paths
+    /// Displays paths passed by replacing all other contents with provided paths
     public func display(lines: [Line]) {
         pathArray = lines
         setNeedsDisplay()
     }
     
-    /// Remove last stroked line
-    public func removeLastLine() {
+    /// Undo the last change
+    public func undo() {
         guard pathArray.count > 0 else { return }
         pathArray.removeLast()
         setNeedsDisplay()
     }
     
-    /// Restore previously removed line
-    public func restoreLastLine() {
+    /// Redo the last change
+    public func redo() {
         guard let line = drawingHistory[safe: pathArray.count] else { return }
         pathArray.append(line)
         setNeedsDisplay()
     }
     
     /// Clear all stroked lines on canvas
-    public func clearCanvas() {
+    public func clear() {
         pathArray = []
         setNeedsDisplay()
     }
