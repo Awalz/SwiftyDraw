@@ -164,6 +164,12 @@ open class SwiftyDrawView: UIView {
         delegate?.swiftyDraw(didCancelDrawingIn: self, using: touch)
     }
     
+     /// Displays paths passed by replacing all other contents with provided paths
+    public func display(lines: [Line]) {
+        pathArray = lines
+        setNeedsDisplay()
+    }
+    
     /// Remove last stroked line
     public func removeLastLine() {
         guard pathArray.count > 0 else { return }
