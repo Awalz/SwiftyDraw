@@ -172,7 +172,7 @@ open class SwiftyDrawView: UIView {
     
     /// Determines whether a last change can be undone
     public var canUndo: Bool {
-        return drawingHistory.count > 0
+        return pathArray.count > 0
     }
     
     /// Determines whether an undone change can be redone
