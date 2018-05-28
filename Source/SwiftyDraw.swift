@@ -170,6 +170,16 @@ open class SwiftyDrawView: UIView {
         setNeedsDisplay()
     }
     
+    /// Determines whether a last change can be undone
+    var canUndo: Bool {
+        return drawingHistory.count > 0
+    }
+    
+    /// Determines whether an undone change can be redone
+    var canRedo: Bool {
+        return drawingHistory.count > pathArray.count
+    }
+    
     /// Undo the last change
     public func undo() {
         guard pathArray.count > 0 else { return }
