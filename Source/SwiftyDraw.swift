@@ -15,129 +15,106 @@
 
 import UIKit
 
-// MARK: Public Protocl Declarations
-
+// MARK: - Public Protocl Declarations
 
 /// SwiftyDrawView Delegate
-
-public protocol SwiftyDrawViewDelegate {
+public protocol SwiftyDrawViewDelegate: class {
     
+    /**
+     SwiftyDrawViewDelegate called when a touch gesture should begin on the SwiftyDrawView using given touch type
+     
+     - Parameter view: SwiftyDrawView where touches occured.
+     - Parameter touchType: Type of touch occuring.
+     */
+    func swiftyDraw(shouldBeginDrawingIn drawingView: SwiftyDrawView, using touch: UITouch) -> Bool
     /**
      SwiftyDrawViewDelegate called when a touch gesture begins on the SwiftyDrawView.
      
      - Parameter view: SwiftyDrawView where touches occured.
      */
-    
-    func SwiftyDrawDidBeginDrawing(view: SwiftyDrawView)
+    func swiftyDraw(didBeginDrawingIn drawingView: SwiftyDrawView, using touch: UITouch)
     
     /**
      SwiftyDrawViewDelegate called when touch gestures continue on the SwiftyDrawView.
      
      - Parameter view: SwiftyDrawView where touches occured.
      */
-    
-    func SwiftyDrawIsDrawing(view: SwiftyDrawView)
+    func swiftyDraw(isDrawingIn drawingView: SwiftyDrawView, using touch: UITouch)
     
     /**
      SwiftyDrawViewDelegate called when touches gestures finish on the SwiftyDrawView.
      
      - Parameter view: SwiftyDrawView where touches occured.
      */
-    
-    func SwiftyDrawDidFinishDrawing(view: SwiftyDrawView)
+    func swiftyDraw(didFinishDrawingIn drawingView: SwiftyDrawView, using touch: UITouch)
     
     /**
      SwiftyDrawViewDelegate called when there is an issue registering touch gestures on the  SwiftyDrawView.
      
      - Parameter view: SwiftyDrawView where touches occured.
      */
-    
-    func SwiftyDrawDidCancelDrawing(view: SwiftyDrawView)
-}
-
-extension SwiftyDrawViewDelegate {
-    
-    func SwiftyDrawDidBeginDrawing(view: SwiftyDrawView) {
-        //optional
-    }
-    
-    func SwiftyDrawIsDrawing(view: SwiftyDrawView) {
-        //optional
-    }
-    
-    func SwiftyDrawDidFinishDrawing(view: SwiftyDrawView) {
-        //optional
-    }
-    
-    func SwiftyDrawDidCancelDrawing(view: SwiftyDrawView) {
-        //optional
-    }
+    func swiftyDraw(didCancelDrawingIn drawingView: SwiftyDrawView, using touch: UITouch)
 }
 
 /// UIView Subclass where touch gestures are translated into Core Graphics drawing
-
 open class SwiftyDrawView: UIView {
     
-    
-    /// Line color for current drawing strokes
-    public var lineColor              : UIColor   = UIColor.black
-    
-    /// Line width for current drawing strokes
-    public var lineWidth              : CGFloat   = 10.0
-    
-    /// Line opacity for current drawing strokes
-    public var lineOpacity            : CGFloat   = 1.0
-    
+    /// Current brush being used for drawing
+    public var brush: Brush = Brush.default
     /// Sets whether touch gestures should be registered as drawing strokes on the current canvas
-    public var drawingEnabled         : Bool      = true
-    
+    public var isEnabled: Bool = true
     /// Public SwiftyDrawView delegate
-    public var delegate               : SwiftyDrawViewDelegate?
+    public weak var delegate: SwiftyDrawViewDelegate?
     
+    private var pathArray: [Line]  = []
+    public  var drawingHistory: [Line] = []
+    private var currentPoint: CGPoint = .zero
+    private var previousPoint: CGPoint = .zero
+    private var previousPreviousPoint: CGPoint = .zero
     
-    private var pathArray             : [Line]    = []
-    private var currentPoint          : CGPoint   = CGPoint()
-    private var previousPoint         : CGPoint   = CGPoint()
-    private var previousPreviousPoint : CGPoint   = CGPoint()
-    
-    private struct Line {
-        var path    : CGMutablePath
-        var color   : UIColor
-        var width   : CGFloat
-        var opacity : CGFloat
+    public struct Line {
+        public var path: CGMutablePath
+        public var brush: Brush
         
-        init(path : CGMutablePath, color: UIColor, width: CGFloat, opacity: CGFloat) {
-            self.path    = path
-            self.color   = color
-            self.width   = width
-            self.opacity = opacity
+        init(path: CGMutablePath, brush: Brush) {
+            self.path = path
+            self.brush = brush
+        }
+        
+        public var closedPath: CGPath? {
+            let _path = path.mutableCopy()
+            _path?.closeSubpath()
+            return _path
         }
     }
     
     /// Public init(frame:) implementation
-    
     override public init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = UIColor.clear
     }
     
     /// Public init(coder:) implementation
-    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.backgroundColor = UIColor.clear
     }
     
     /// Overriding draw(rect:) to stroke paths
-    
     override open func draw(_ rect: CGRect) {
-        let context : CGContext = UIGraphicsGetCurrentContext()!
+        guard let context: CGContext = UIGraphicsGetCurrentContext() else { return }
         context.setLineCap(.round)
 
-        for line in pathArray {
-            context.setLineWidth(line.width)
-            context.setAlpha(line.opacity)
-            context.setStrokeColor(line.color.cgColor)
+        for (i, line) in pathArray.enumerated() {
+            // update last line's brush settings while drawing, in case they've changed
+//            if i == pathArray.count-1 {
+//                pathArray[i].color = brush.color
+//                pathArray[i].width = brush.width
+//                pathArray[i].opacity = brush.opacity
+//            }
+            context.setLineWidth(line.brush.width)
+            context.setAlpha(line.brush.opacity)
+            context.setStrokeColor(line.brush.color.cgColor)
             context.addPath(line.path)
             context.beginTransparencyLayer(auxiliaryInfo: nil)
             context.strokePath()
@@ -146,71 +123,79 @@ open class SwiftyDrawView: UIView {
     }
     
     /// touchesBegan implementation to capture strokes
-    
     override open func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard drawingEnabled == true else {
-            return
-        }
+        guard let touch = touches.first else { return }
+        guard delegate?.swiftyDraw(shouldBeginDrawingIn: self, using: touch) ?? true else { return }
         
-        self.delegate?.SwiftyDrawDidBeginDrawing(view: self)
-        if let touch = touches.first as UITouch! {
-            setTouchPoints(touch, view: self)
-            let newLine = Line(path: CGMutablePath(), color: self.lineColor, width: self.lineWidth, opacity: self.lineOpacity)
-            newLine.path.addPath(createNewPath())
-            pathArray.append(newLine)
-        }
+        guard isEnabled else { return }
+        delegate?.swiftyDraw(didBeginDrawingIn: self, using: touch)
+        
+        setTouchPoints(touch, view: self)
+        let newLine = Line(path: CGMutablePath(), brush: Brush(color: brush.color, width: brush.width, opacity: brush.opacity))
+        newLine.path.addPath(createNewPath())
+        pathArray.append(newLine)
+        drawingHistory = pathArray // adding a new line should also update history
     }
     
     /// touchesMoves implementation to capture strokes
-
-    
     override open func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard drawingEnabled == true else {
-            return
-        }
+        guard isEnabled else { return }
+        guard let touch = touches.first else { return }
+        delegate?.swiftyDraw(isDrawingIn: self, using: touch)
         
-        self.delegate?.SwiftyDrawIsDrawing(view: self)
-        if let touch = touches.first as UITouch! {
-            updateTouchPoints(touch, view: self)
-            let newLine = createNewPath()
-            if let currentPath = pathArray.last {
-                currentPath.path.addPath(newLine)
-            }
+        updateTouchPoints(for: touch, in: self)
+        let newLine = createNewPath()
+        if let currentPath = pathArray.last {
+            currentPath.path.addPath(newLine)
         }
     }
     
     /// touchedEnded implementation to capture strokes
-
     override open func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard drawingEnabled == true else {
-            return
-        }
-        
-        self.delegate?.SwiftyDrawDidFinishDrawing(view: self)
+        guard isEnabled else { return }
+        guard let touch = touches.first else { return }
+        delegate?.swiftyDraw(didFinishDrawingIn: self, using: touch)
     }
     
     /// touchedCancelled implementation
-    
     override open func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard drawingEnabled == true else {
-            return
-        }
-        
-        self.delegate?.SwiftyDrawDidCancelDrawing(view: self)
+        guard isEnabled else { return }
+        guard let touch = touches.first else { return }
+        delegate?.swiftyDraw(didCancelDrawingIn: self, using: touch)
     }
     
-    /// Remove last stroked line
+    /// Displays paths passed by replacing all other contents with provided paths
+    public func display(lines: [Line]) {
+        pathArray = lines
+        setNeedsDisplay()
+    }
     
-    public func removeLastLine() {
-        if pathArray.count > 0 {
-            pathArray.removeLast()
-        }
+    /// Determines whether a last change can be undone
+    public var canUndo: Bool {
+        return pathArray.count > 0
+    }
+    
+    /// Determines whether an undone change can be redone
+    public var canRedo: Bool {
+        return drawingHistory.count > pathArray.count
+    }
+    
+    /// Undo the last change
+    public func undo() {
+        guard pathArray.count > 0 else { return }
+        pathArray.removeLast()
+        setNeedsDisplay()
+    }
+    
+    /// Redo the last change
+    public func redo() {
+        guard let line = drawingHistory[safe: pathArray.count] else { return }
+        pathArray.append(line)
         setNeedsDisplay()
     }
     
     /// Clear all stroked lines on canvas
-    
-    public func clearCanvas() {
+    public func clear() {
         pathArray = []
         setNeedsDisplay()
     }
@@ -223,7 +208,7 @@ open class SwiftyDrawView: UIView {
         currentPoint = touch.location(in: view)
     }
     
-    private func updateTouchPoints(_ touch: UITouch,view: UIView) {
+    private func updateTouchPoints(for touch: UITouch,in view: UIView) {
         previousPreviousPoint = previousPoint
         previousPoint = touch.previousLocation(in: view)
         currentPoint = touch.location(in: view)
@@ -255,12 +240,15 @@ open class SwiftyDrawView: UIView {
     
     private func addSubPathToPath(_ subpath: CGMutablePath) -> CGMutablePath {
         let bounds : CGRect = subpath.boundingBox
-        let drawBox : CGRect = bounds.insetBy(dx: -2.0 * lineWidth, dy: -2.0 * lineWidth)
+        let drawBox : CGRect = bounds.insetBy(dx: -2.0 * brush.width, dy: -2.0 * brush.width)
         self.setNeedsDisplay(drawBox)
         return subpath
     }
 }
 
-
-
-    
+extension Collection {
+    /// Returns the element at the specified index if it is within bounds, otherwise nil.
+    subscript (safe index: Index) -> Element? {
+        return indices.contains(index) ? self[index] : nil
+    }
+}
