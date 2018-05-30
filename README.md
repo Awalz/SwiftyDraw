@@ -9,7 +9,7 @@
 
 ---
 
-This is an original fork from [Awalz's SwiftyDraw](https://github.com/Awalz/SwiftyDraw) repository.
+This is a project built by [Awalz](https://github.com/Awalz) and maintained & improved by [LinusGeffarth](https://github.com/LinusGeffarth).
 
 ---
 
