@@ -26,7 +26,7 @@ public class Brush {
         self.adjustedWidthFactor = adjustedWidthFactor
     }
     
-    public func adjustedWidth(for touch: UITouch) -> CGFloat {
+    private func adjustedWidth(for touch: UITouch) -> CGFloat {
         if touch.type == .stylus {
             return (originalWidth*(1-adjustedWidthFactor/10*2)) + (adjustedWidthFactor/touch.altitudeAngle)
         }
@@ -44,7 +44,7 @@ public class Brush {
     }
 
     public static var thin: Brush {
-        return Brush(color: .black, width: 3, opacity: 1)
+        return Brush(color: .black, width: 2, opacity: 1)
     }
 
     public static var medium: Brush {
@@ -55,8 +55,12 @@ public class Brush {
         return Brush(color: .black, width: 10, opacity: 1)
     }
 
+    public static var marker: Brush {
+        return Brush(color: #colorLiteral(red: 0.920953393, green: 0.447560966, blue: 0.4741248488, alpha: 1), width: 12, opacity: 0.3)
+    }
+
     public static var eraser: Brush {
-        return Brush(color: .white, width: 12, opacity: 1, adjustedWidthFactor: 5)
+        return Brush(color: .white, width: 8, opacity: 1, adjustedWidthFactor: 5)
     }
     
     public static var selection: Brush {
