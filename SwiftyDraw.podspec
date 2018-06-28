@@ -25,7 +25,7 @@ Pod::Spec.new do |s|
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'BSD', :file => 'LICENSE' }
   s.author           = { 'Andrew Walz' => 'andrewjwalz@gmail.com' }
-  s.source           = { :git => 'https://github.com/Awalz/SwiftyDraw.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/Awalz/SwiftyDraw.git', :tag => '2.0' }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '9.1'
