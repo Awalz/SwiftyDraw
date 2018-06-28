@@ -76,8 +76,8 @@ public static var `default`: Brush { get } // black, width 3
 public static var thin     : Brush { get } // black, width 2
 public static var medium   : Brush { get } // black, width 7
 public static var thick    : Brush { get } // black, width 10
-public static var marker   : Brush { get } // flat red-ish, width 8
-public static var eraser   : Brush { get } // currently this fakes an eraser by using the canvas' background color to draw
+public static var marker   : Brush { get } // flat red-ish, width 12
+public static var eraser   : Brush { get } // white, width 8; currently this fakes an eraser by using the canvas' background color to draw
 ```
 
 ### Adjusted Width Factor
