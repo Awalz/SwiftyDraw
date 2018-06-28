@@ -15,7 +15,7 @@
 
 import UIKit
 
-// MARK: - Public Protocl Declarations
+// MARK: - Public Protocol Declarations
 
 /// SwiftyDrawView Delegate
 public protocol SwiftyDrawViewDelegate: class {
@@ -106,12 +106,6 @@ open class SwiftyDrawView: UIView {
         context.setLineCap(.round)
 
         for (i, line) in pathArray.enumerated() {
-            // update last line's brush settings while drawing, in case they've changed
-//            if i == pathArray.count-1 {
-//                pathArray[i].color = brush.color
-//                pathArray[i].width = brush.width
-//                pathArray[i].opacity = brush.opacity
-//            }
             context.setLineWidth(line.brush.width)
             context.setAlpha(line.brush.opacity)
             context.setStrokeColor(line.brush.color.cgColor)
@@ -245,6 +239,8 @@ open class SwiftyDrawView: UIView {
         return subpath
     }
 }
+
+// MARK: - Extensions
 
 extension Collection {
     /// Returns the element at the specified index if it is within bounds, otherwise nil.
