@@ -55,20 +55,50 @@ self.view.addSubview(drawView)
     
 By default, the view will automatically respond to touch gestures and begin drawing. The default color is **black**.
 
-To disable drawing, simply set the `drawingEnabled` property to false:
+To disable drawing, simply set the `isEnabled` property to false:
 
 ```swift
-drawView.drawingEnabled = false
+drawView.isEnabled = false
 ```
-    
-## Customization
+
+## Brushes
+
+For drawing, we use `Brush` to keep track of styles like `width`, `color`, etc.. We have multiple different default brushes, you can use as follows:
+
+```swift
+drawView.brush = Brush.default
+```
+
+The default brushed are:
+
+```swift
+public static var `default`: Brush { get } // black, width 3
+public static var thin     : Brush { get } // black, width 2
+public static var medium   : Brush { get } // black, width 7
+public static var thick    : Brush { get } // black, width 10
+public static var marker   : Brush { get } // flat red-ish, width 8
+public static var eraser   : Brush { get } // currently this fakes an eraser by using the canvas' background color to draw
+```
+
+### Adjusted Width Factor
+
+`SwiftyDrawView` supports drawing-angle-adjusted brushes. Effectively, that means, if the user (using an Pencil) draws with the tip of the pencil, the brush will reduce its width a little. If the user draws at a very low angle, with the side of the pencil, the brush will be a little thicker.
+You can modify this behavior by setting `adjustedWidthFactor` of a brush. If you increase the number (to, say, `5`) the changes will increase. If you reduce the number to `0`, the width will not be adjusted at all.
+The default value is `1` which causes a slight increase in width.
+
+This is an opt-in feature. That means, in `shouldBeginDrawingIn`, you need to manually put `drawingView.brush.adjustWidth(for: touch)`, to make it work.
+That is, because you might not want to use it if you have implemented a zoom feature and want to disable it while the user is zooming to get better results.
+
+## Further Customization:
+
+For more customization, you can modify the different properties of a brush to fit your needs.
 
 ### Line Color:
 
-The color of a line stoke can be changed by adjusting the `lineColor` property. SwiftyDraw accepts any UIColor:
+The color of a line stoke can be changed by adjusting the `color` property of a brush. SwiftyDraw accepts any UIColor:
 
 ```swift
-drawView.lineColor = UIColor.red
+drawView.brush.color = .red
 ```
     
 <p align="center">
@@ -76,14 +106,14 @@ drawView.lineColor = UIColor.red
 </p>
 
 ```swift
-drawView.lineColor = UIColor(colorLiteralRed: 0.75, green: 0.50, blue: 0.88, alpha: 1.0)
+drawView.brush.color = UIColor(colorLiteralRed: 0.75, green: 0.50, blue: 0.88, alpha: 1.0)
 ```    
 ### Line Width:
 
-The with of a line stroke can be changed by adjusting the `lineWidth` property. SwiftyDraw accepts any positive CGFloat:
+The with of a line stroke can be changed by adjusting the `width` property of a brush. SwiftyDraw accepts any positive CGFloat:
 
 ```swift
-drawView.lineWidth = CGFloat(5.0)
+drawView.brush.width = CGFloat(5.0)
 ```
 
 ### Line Opacity:
@@ -91,7 +121,7 @@ drawView.lineWidth = CGFloat(5.0)
 The opacity of a line stoke can be changed by adjusting the `lineOpacity` property. SwiftyDraw accepts a CGFloat between 0. and 1.0:
 
 ```swift
-drawView.lineOpacity = CGFloat(0.5)
+drawView.brush.opacity = CGFloat(0.5)
 ```
     
 ## Editing
