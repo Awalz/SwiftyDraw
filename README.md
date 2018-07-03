@@ -176,4 +176,4 @@ If you would like to propose any enhancements, bug fixes, etc., feel free to cre
 
 ### Contact
 
-If you have any questions, or just want to say hi, reach out to me via [Twitter](https://twitter.com/linusgeffarth), or [email](mailto:linus@geffarth.de).
+If you have any questions, or just want to say hi, reach out to me via [Twitter](https://twitter.com/linusgeffarth), or [email](mailto:linus@geffarth.com).
