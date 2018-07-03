@@ -10,7 +10,7 @@
 
 ## Overview
 
-SwiftyDraw is a simple, lightweight drawing framework written in Swift. SwiftyDraw is built using Core Gaphics and is very easy to implement.
+SwiftyDraw is a simple, light-weight drawing framework written in Swift. SwiftyDraw is built using Core Gaphics and is very easy to implement.
 
 ## Requirements
 * iOS 9.1+
@@ -90,7 +90,7 @@ For more customization, you can modify the different properties of a brush to fi
 
 ### Line Color:
 
-The color of a line stoke can be changed by adjusting the `color` property of a brush. SwiftyDraw accepts any UIColor:
+The color of a line stroke can be changed by adjusting the `color` property of a brush. SwiftyDraw accepts any UIColor:
 
 ```swift
 drawView.brush.color = .red
@@ -105,7 +105,7 @@ drawView.brush.color = UIColor(colorLiteralRed: 0.75, green: 0.50, blue: 0.88, a
 ```    
 ### Line Width:
 
-The with of a line stroke can be changed by adjusting the `width` property of a brush. SwiftyDraw accepts any positive CGFloat:
+The width of a line stroke can be changed by adjusting the `width` property of a brush. SwiftyDraw accepts any positive CGFloat:
 
 ```swift
 drawView.brush.width = CGFloat(5.0)
@@ -113,7 +113,7 @@ drawView.brush.width = CGFloat(5.0)
 
 ### Line Opacity:
 
-The opacity of a line stoke can be changed by adjusting the `lineOpacity` property. SwiftyDraw accepts a CGFloat between 0. and 1.0:
+The opacity of a line stroke can be changed by adjusting the `lineOpacity` property. SwiftyDraw accepts a CGFloat between 0. and 1.0:
 
 ```swift
 drawView.brush.opacity = CGFloat(0.5)
@@ -129,7 +129,7 @@ If you wish to clear the entire canvas, simply call the `clear` function:
 drawView.clear()
 ``` 
 
-### Undo the last change:
+### Drawing History:
 
 ```swift
 drawView.undo()
@@ -143,7 +143,7 @@ drawView.redo()
     
 ## Delegate
 
-SwiftyDraw has delegate functions to notify you when a user is interacting with a SwiftDrawView. To access these delegate methods, simply add your View Controller as the `SwiftyDrawViewDelegate`:
+SwiftyDraw has delegate functions to notify you when a user is interacting with a SwiftDrawView. To access these delegate methods, simply make your View Controller conform to the `SwiftyDrawViewDelegate` protocol:
 
 ```swift
 class ViewController: UIViewController, SwiftyDrawViewDelegate
@@ -176,4 +176,4 @@ If you would like to propose any enhancements, bug fixes, etc., feel free to cre
 
 ### Contact
 
-If you have any questions, or just want to say hi, reach out to me via [Twitter](https://twitter.com/linusgeffarth), or [email](mailto:linus@geffarth.com).
+If you have any questions, or just want to say hi, you can reach out to me via [Twitter](https://twitter.com/linusgeffarth), or [email](mailto:linus@geffarth.com).
