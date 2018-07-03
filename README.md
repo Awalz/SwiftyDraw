@@ -7,11 +7,6 @@
     <img src="http://img.shields.io/badge/license-BSD-lightgrey.svg?style=flat" alt="License: BSD" /> <br><br>
 </p>
 
----
-
-This is a project built by [Awalz](https://github.com/Awalz) and maintained & improved by [LinusGeffarth](https://github.com/LinusGeffarth).
-
----
 
 ## Overview
 
@@ -167,14 +162,15 @@ func swiftyDraw(didBeginDrawingIn drawingView: SwiftyDrawView, using touch: UITo
 func swiftyDraw(isDrawingIn drawingView: SwiftyDrawView, using touch: UITouch)
     
 /// SwiftyDrawViewDelegate called when touches gestures finish on the SwiftyDrawView.
-swiftyDraw(didFinishDrawingIn drawingView: SwiftyDrawView, using touch: UITouch)
+func swiftyDraw(didFinishDrawingIn drawingView: SwiftyDrawView, using touch: UITouch)
     
 /// SwiftyDrawViewDelegate called when there is an issue registering touch gestures on the  SwiftyDrawView.
 func swiftyDraw(didCancelDrawingIn drawingView: SwiftyDrawView, using touch: UITouch)
 ```
-
  
 ### Contribution
+
+This is a project built by [Awalz](https://github.com/Awalz) and maintained & improved by [LinusGeffarth](https://github.com/LinusGeffarth).
 
 If you would like to propose any enhancements, bug fixes, etc., feel free to create a pull request or an issue respectively.
 
