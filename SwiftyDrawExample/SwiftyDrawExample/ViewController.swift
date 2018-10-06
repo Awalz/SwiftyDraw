@@ -95,26 +95,26 @@ class ViewController: UIViewController, SwiftyDrawViewDelegate {
     }
     
     func colorButtonPressed(button: ColorButton) {
-        drawView.lineColor = button.color
+        drawView.brush.color = button.color
     }
     
     func undo() {
-        drawView.removeLastLine()
+        drawView.undo()
     }
     
     func deleteDrawing() {
-        drawView.clearCanvas()
+        drawView.clear()
     }
     
     func lineWidthSliderValueDidChange(sender:UISlider!) {
-        drawView.lineWidth = CGFloat(sender.value)
+        drawView.brush.width = CGFloat(sender.value)
     }
     
     func lineOpacitySliderValueDidChange(sender:UISlider!) {
-        drawView.lineOpacity = CGFloat(sender.value)
+        drawView.brush.opacity = CGFloat(sender.value)
     }
     
-    func SwiftyDrawDidBeginDrawing(view: SwiftyDrawView) {
+    func swiftyDraw(didBeginDrawingIn drawingView: SwiftyDrawView, using touch: UITouch) {
         print("Did begin drawing")
         UIView.animate(withDuration: 0.5, animations: {
             self.redButton.alpha = 0.0
@@ -130,11 +130,11 @@ class ViewController: UIViewController, SwiftyDrawViewDelegate {
         })
     }
     
-    func SwiftyDrawIsDrawing(view: SwiftyDrawView) {
+    func swiftyDraw(isDrawingIn drawingView: SwiftyDrawView, using touch: UITouch) {
         print("Is Drawing")
     }
     
-    func SwiftyDrawDidFinishDrawing(view: SwiftyDrawView) {
+    func swiftyDraw(didFinishDrawingIn drawingView: SwiftyDrawView, using touch: UITouch) {
         print("Did finish drawing")
         UIView.animate(withDuration: 0.5, animations: {
             self.redButton.alpha = 1.0
@@ -150,8 +150,13 @@ class ViewController: UIViewController, SwiftyDrawViewDelegate {
         })
     }
     
-    func SwiftyDrawDidCancelDrawing(view: SwiftyDrawView) {
+    func swiftyDraw(didCancelDrawingIn drawingView: SwiftyDrawView, using touch: UITouch) {
         print("Did cancel")
     }
+    
+    func swiftyDraw(shouldBeginDrawingIn drawingView: SwiftyDrawView, using touch: UITouch) -> Bool {
+        return true
+    }
+    
 }
 

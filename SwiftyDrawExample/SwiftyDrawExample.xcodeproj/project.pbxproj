@@ -12,8 +12,9 @@
 		1671B15B1DE8CBA100ED5239 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1671B1591DE8CBA100ED5239 /* Main.storyboard */; };
 		1671B15D1DE8CBA100ED5239 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1671B15C1DE8CBA100ED5239 /* Assets.xcassets */; };
 		1671B1601DE8CBA100ED5239 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1671B15E1DE8CBA100ED5239 /* LaunchScreen.storyboard */; };
-		1671B16A1DE8CC2F00ED5239 /* SwiftyDraw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1671B1691DE8CC2F00ED5239 /* SwiftyDraw.swift */; };
 		1671B16C1DE8D95E00ED5239 /* ColorButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1671B16B1DE8D95E00ED5239 /* ColorButton.swift */; };
+		94CEF9EF2168F8350036EF15 /* SwiftyDraw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CEF9ED2168F8350036EF15 /* SwiftyDraw.swift */; };
+		94CEF9F02168F8350036EF15 /* Brush.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CEF9EE2168F8350036EF15 /* Brush.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,8 +25,9 @@
 		1671B15C1DE8CBA100ED5239 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1671B15F1DE8CBA100ED5239 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1671B1611DE8CBA100ED5239 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1671B1691DE8CC2F00ED5239 /* SwiftyDraw.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyDraw.swift; path = ../../Source/SwiftyDraw.swift; sourceTree = "<group>"; };
 		1671B16B1DE8D95E00ED5239 /* ColorButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorButton.swift; sourceTree = "<group>"; };
+		94CEF9ED2168F8350036EF15 /* SwiftyDraw.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyDraw.swift; sourceTree = "<group>"; };
+		94CEF9EE2168F8350036EF15 /* Brush.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Brush.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +45,7 @@
 			isa = PBXGroup;
 			children = (
 				1671B1541DE8CBA100ED5239 /* SwiftyDrawExample */,
+				94CEF9EC2168F8350036EF15 /* Source */,
 				1671B1531DE8CBA100ED5239 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -58,7 +61,6 @@
 		1671B1541DE8CBA100ED5239 /* SwiftyDrawExample */ = {
 			isa = PBXGroup;
 			children = (
-				1671B1691DE8CC2F00ED5239 /* SwiftyDraw.swift */,
 				1671B1551DE8CBA100ED5239 /* AppDelegate.swift */,
 				1671B1571DE8CBA100ED5239 /* ViewController.swift */,
 				1671B16B1DE8D95E00ED5239 /* ColorButton.swift */,
@@ -68,6 +70,16 @@
 				1671B1611DE8CBA100ED5239 /* Info.plist */,
 			);
 			path = SwiftyDrawExample;
+			sourceTree = "<group>";
+		};
+		94CEF9EC2168F8350036EF15 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				94CEF9ED2168F8350036EF15 /* SwiftyDraw.swift */,
+				94CEF9EE2168F8350036EF15 /* Brush.swift */,
+			);
+			name = Source;
+			path = ../Source;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -143,8 +155,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94CEF9F02168F8350036EF15 /* Brush.swift in Sources */,
+				94CEF9EF2168F8350036EF15 /* SwiftyDraw.swift in Sources */,
 				1671B1581DE8CBA100ED5239 /* ViewController.swift in Sources */,
-				1671B16A1DE8CC2F00ED5239 /* SwiftyDraw.swift in Sources */,
 				1671B1561DE8CBA100ED5239 /* AppDelegate.swift in Sources */,
 				1671B16C1DE8D95E00ED5239 /* ColorButton.swift in Sources */,
 			);
