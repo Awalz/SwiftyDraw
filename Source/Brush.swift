@@ -12,7 +12,7 @@ public class Brush {
     
     public var color: UIColor
     /// Original brush width set when initializing the brush. Not affected by updating the brush width. Used to determine adjusted width
-    private var originalWidth: CGFloat
+    var originalWidth: CGFloat
     public var width: CGFloat
     public var opacity: CGFloat
     
