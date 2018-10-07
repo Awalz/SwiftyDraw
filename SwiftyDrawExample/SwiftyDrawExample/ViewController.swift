@@ -15,7 +15,22 @@
 
 import UIKit
 
-class ViewController: UIViewController, SwiftyDrawViewDelegate {
+extension ViewController: SwiftyDrawViewDelegate{
+    
+    func swiftyDraw(shouldBeginDrawingIn drawingView: SwiftyDrawView, using touch: UITouch) -> Bool { return true }
+    
+    func swiftyDraw(didBeginDrawingIn drawingView: SwiftyDrawView, using touch: UITouch) { }
+    
+    func swiftyDraw(isDrawingIn drawingView: SwiftyDrawView, using touch: UITouch) { }
+    
+    func swiftyDraw(didFinishDrawingIn drawingView: SwiftyDrawView, using touch: UITouch) { }
+    
+    func swiftyDraw(didCancelDrawingIn drawingView: SwiftyDrawView, using touch: UITouch) { }
+}
+
+class ViewController: UIViewController {
+    
+    
     
     var drawView : SwiftyDrawView!
     var redButton : ColorButton!
@@ -24,11 +39,15 @@ class ViewController: UIViewController, SwiftyDrawViewDelegate {
     var orangeButton : ColorButton!
     var purpleButton : ColorButton!
     var yellowButton : ColorButton!
+    
+    //The Eraser Button
+    var eraseButton: UIButton!
+    
     var undoButton : UIButton!
     var deleteButton : UIButton!
     var lineWidthSlider : UISlider!
     var opacitySlider : UISlider!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         drawView = SwiftyDrawView(frame: self.view.frame)
@@ -74,6 +93,13 @@ class ViewController: UIViewController, SwiftyDrawViewDelegate {
         deleteButton.setTitle("delete", for: UIControlState())
         deleteButton.addTarget(self, action: #selector(deleteDrawing), for: .touchUpInside)
         self.view.addSubview(deleteButton)
+        
+        //Add The Eraser Tool
+        eraseButton = UIButton(frame: CGRect(x: self.view.frame.width - 60, y: 90, width: 60, height: 30))
+        eraseButton.setTitleColor(UIColor.black, for: UIControlState())
+        eraseButton.setTitle("erase", for: UIControlState())
+        eraseButton.addTarget(self, action: #selector(erase), for: .touchUpInside)
+        self.view.addSubview(eraseButton)
     }
     
     func addSliders() {
@@ -96,25 +122,39 @@ class ViewController: UIViewController, SwiftyDrawViewDelegate {
     
     func colorButtonPressed(button: ColorButton) {
         drawView.brush.color = button.color
+        drawView.brush.blendMode = .normal
+    }
+    
+    
+    /// Sets The Blend Mode To Clear So We Can Erase Our Content
+    func erase(){
+        
+        drawView.brush.blendMode = .clear
+        
     }
     
     func undo() {
+        
         drawView.undo()
+        
     }
     
     func deleteDrawing() {
         drawView.clear()
+        drawView.brush.blendMode = .normal
     }
     
     func lineWidthSliderValueDidChange(sender:UISlider!) {
         drawView.brush.width = CGFloat(sender.value)
+        drawView.brush.blendMode = .normal
     }
     
     func lineOpacitySliderValueDidChange(sender:UISlider!) {
         drawView.brush.opacity = CGFloat(sender.value)
+        drawView.brush.blendMode = .normal
     }
     
-    func swiftyDraw(didBeginDrawingIn drawingView: SwiftyDrawView, using touch: UITouch) {
+    func SwiftyDrawDidBeginDrawing(view: SwiftyDrawView) {
         print("Did begin drawing")
         UIView.animate(withDuration: 0.5, animations: {
             self.redButton.alpha = 0.0
@@ -130,11 +170,11 @@ class ViewController: UIViewController, SwiftyDrawViewDelegate {
         })
     }
     
-    func swiftyDraw(isDrawingIn drawingView: SwiftyDrawView, using touch: UITouch) {
+    func SwiftyDrawIsDrawing(view: SwiftyDrawView) {
         print("Is Drawing")
     }
     
-    func swiftyDraw(didFinishDrawingIn drawingView: SwiftyDrawView, using touch: UITouch) {
+    func SwiftyDrawDidFinishDrawing(view: SwiftyDrawView) {
         print("Did finish drawing")
         UIView.animate(withDuration: 0.5, animations: {
             self.redButton.alpha = 1.0
@@ -150,13 +190,8 @@ class ViewController: UIViewController, SwiftyDrawViewDelegate {
         })
     }
     
-    func swiftyDraw(didCancelDrawingIn drawingView: SwiftyDrawView, using touch: UITouch) {
+    func SwiftyDrawDidCancelDrawing(view: SwiftyDrawView) {
         print("Did cancel")
     }
-    
-    func swiftyDraw(shouldBeginDrawingIn drawingView: SwiftyDrawView, using touch: UITouch) -> Bool {
-        return true
-    }
-    
 }
 

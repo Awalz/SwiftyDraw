@@ -20,12 +20,16 @@ public class Brush {
     
     public var adjustedWidthFactor: CGFloat = 1
     
-    public init(color: UIColor = .black, width: CGFloat = 3, opacity: CGFloat = 1, adjustedWidthFactor: CGFloat = 1) {
+    /// Allows for actually erasing content, by setting it to `.clear`. Default is `.normal`
+    public var blendMode: CGBlendMode = .normal
+    
+    public init(color: UIColor = .black, width: CGFloat = 3, opacity: CGFloat = 1, adjustedWidthFactor: CGFloat = 1, blendMode: CGBlendMode = .normal) {
         self.color = color
         self._originalWidth = width
         self.width = width
         self.opacity = opacity
         self.adjustedWidthFactor = adjustedWidthFactor
+        self.blendMode = blendMode
     }
     
     private func adjustedWidth(for touch: UITouch) -> CGFloat {
@@ -64,7 +68,7 @@ public class Brush {
     }
 
     public static var eraser: Brush {
-        return Brush(color: .white, width: 8, opacity: 1, adjustedWidthFactor: 5)
+        return Brush(adjustedWidthFactor: 5, blendMode: .clear)
     }
     
     public static var selection: Brush {
