@@ -105,7 +105,7 @@ open class SwiftyDrawView: UIView {
         guard let context: CGContext = UIGraphicsGetCurrentContext() else { return }
         context.setLineCap(.round)
 
-        for (i, line) in pathArray.enumerated() {
+        for (_, line) in pathArray.enumerated() {
             context.setLineWidth(line.brush.width)
             context.setAlpha(line.brush.opacity)
             context.setStrokeColor(line.brush.color.cgColor)
