@@ -1,10 +1,3 @@
-#
-# Be sure to run `pod lib lint SwiftyDraw.podspec' to ensure this is a
-# valid spec before submitting.
-#
-# Any lines starting with a # are optional, but their use is encouraged
-# To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html
-#
 
 Pod::Spec.new do |s|
   s.name             = 'SwiftyDraw'
@@ -16,8 +9,8 @@ Pod::Spec.new do |s|
                        DESC
 
   s.homepage         = 'https://github.com/Awalz/SwiftyDraw'
-  s.license          = { :type => 'BSD', :file => 'LICENSE' }
-  s.author           = { 'Andrew Walz' => 'andrewjwalz@gmail.com' }
+  s.license          = { :type => 'MIT', :file => 'LICENSE' }
+  s.author           = { 'Linus Geffarth' => 'linus@geffarth.com' }
   s.source           = { :git => 'https://github.com/Awalz/SwiftyDraw.git', :tag => '2.0' }
   s.social_media_url = 'https://twitter.com/linusgeffarth'
 
