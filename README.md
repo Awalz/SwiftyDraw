@@ -22,9 +22,6 @@ SwiftyDraw is available under the BSD license. See the LICENSE file for more inf
 
 ## Installation
 
-**Note**
-> The current version available on CocoaPods is outdated. I'm working on getting it up-to-date. Until then, please download and install the source code manually. Thanks!
-
 ### Cocoapods:
 
 SwiftyDraw is available through [CocoaPods](http://cocoapods.org). To install
