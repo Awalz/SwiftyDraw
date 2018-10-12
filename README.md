@@ -16,10 +16,6 @@ SwiftyDraw is a simple, light-weight drawing framework written in Swift. SwiftyD
 * iOS 9.1+
 * Swift 4
 
-## License
-
-SwiftyDraw is available under the BSD license. See the LICENSE file for more info.
-
 ## Installation
 
 ### Cocoapods:
@@ -177,3 +173,7 @@ If you would like to propose any enhancements, bug fixes, etc., feel free to cre
 ### Contact
 
 If you have any questions, or just want to say hi, you can reach out to me via [Twitter](https://twitter.com/linusgeffarth), or [email](mailto:linus@geffarth.com).
+
+### LICENSE
+
+SwiftyDraw is available under the MIT license. See the LICENSE file for more info.
