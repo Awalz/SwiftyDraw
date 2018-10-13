@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'SwiftyDraw'
-  s.version          = '2.0'
+  s.version          = '2.1'
   s.summary          = 'A simple, core graphics drawing framework written in Swift'
 
   s.description      = <<-DESC
@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.homepage         = 'https://github.com/Awalz/SwiftyDraw'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Linus Geffarth' => 'linus@geffarth.com' }
-  s.source           = { :git => 'https://github.com/Awalz/SwiftyDraw.git', :tag => '2.0' }
+  s.source           = { :git => 'https://github.com/Awalz/SwiftyDraw.git', :tag => s.version }
   s.social_media_url = 'https://twitter.com/linusgeffarth'
 
   s.ios.deployment_target = '9.1'
