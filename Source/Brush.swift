@@ -33,12 +33,8 @@ public class Brush {
     }
     
     private func adjustedWidth(for touch: UITouch) -> CGFloat {
-        if #available(iOS 9.1, *), touch.type == .stylus {
-                return (originalWidth*(1-adjustedWidthFactor/10*2)) + (adjustedWidthFactor/touch.altitudeAngle)
-        } else {
-            // Fallback on earlier versions
-        }
-        return originalWidth
+        guard #available(iOS 9.1, *), touch.type == .stylus else { return originalWidth }
+        return (originalWidth*(1-adjustedWidthFactor/10*2)) + (adjustedWidthFactor/touch.altitudeAngle)
     }
 
     public func adjustWidth(for touch: UITouch) {
