@@ -162,6 +162,7 @@ open class SwiftyDrawView: UIView {
     /// Displays paths passed by replacing all other contents with provided paths
     public func display(lines: [Line]) {
         pathArray = lines
+        drawingHistory = lines
         setNeedsDisplay()
     }
     
