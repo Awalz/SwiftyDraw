@@ -80,12 +80,6 @@ open class SwiftyDrawView: UIView {
             self.path = path
             self.brush = brush
         }
-        
-        public var closedPath: CGPath? {
-            let _path = path.mutableCopy()
-            _path?.closeSubpath()
-            return _path
-        }
     }
     
     /// Public init(frame:) implementation
@@ -97,7 +91,7 @@ open class SwiftyDrawView: UIView {
     /// Public init(coder:) implementation
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        self.backgroundColor = UIColor.clear
+        self.backgroundColor = .clear
     }
     
     /// Overriding draw(rect:) to stroke paths

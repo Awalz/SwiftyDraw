@@ -33,7 +33,7 @@ public class Brush {
     }
     
     private func adjustedWidth(for touch: UITouch) -> CGFloat {
-        guard #available(iOS 9.1, *), touch.type == .stylus else { return originalWidth }
+        guard #available(iOS 9.1, *), touch.type == .pencil else { return originalWidth }
         return (originalWidth*(1-adjustedWidthFactor/10*2)) + (adjustedWidthFactor/touch.altitudeAngle)
     }
 
@@ -60,7 +60,7 @@ public class Brush {
     }
 
     public static var marker: Brush {
-        return Brush(color: #colorLiteral(red: 0.920953393, green: 0.447560966, blue: 0.4741248488, alpha: 1), width: 12, opacity: 0.3)
+        return Brush(color: #colorLiteral(red: 0.920953393, green: 0.447560966, blue: 0.4741248488, alpha: 1), width: 10, opacity: 0.3)
     }
 
     public static var eraser: Brush {
