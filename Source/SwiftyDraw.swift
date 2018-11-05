@@ -66,8 +66,8 @@ open class SwiftyDrawView: UIView {
     /// Public SwiftyDrawView delegate
     public weak var delegate: SwiftyDrawViewDelegate?
     
-    private var pathArray: [Line]  = []
-    public  var drawingHistory: [Line] = []
+    public var lines: [Line]  = []
+    public var drawingHistory: [Line] = []
     private var currentPoint: CGPoint = .zero
     private var previousPoint: CGPoint = .zero
     private var previousPreviousPoint: CGPoint = .zero
@@ -98,7 +98,7 @@ open class SwiftyDrawView: UIView {
     override open func draw(_ rect: CGRect) {
         guard let context: CGContext = UIGraphicsGetCurrentContext() else { return }
         
-        for line in pathArray {
+        for line in lines {
             context.setLineCap(.round)
             context.setLineJoin(.round)
             context.setLineWidth(line.brush.width)
@@ -122,8 +122,8 @@ open class SwiftyDrawView: UIView {
         setTouchPoints(touch, view: self)
         let newLine = Line(path: CGMutablePath(), brush: Brush(color: brush.color, width: brush.width, opacity: brush.opacity, blendMode: brush.blendMode))
         newLine.path.addPath(createNewPath())
-        pathArray.append(newLine)
-        drawingHistory = pathArray // adding a new line should also update history
+        lines.append(newLine)
+        drawingHistory = lines // adding a new line should also update history
     }
     
     /// touchesMoves implementation to capture strokes
@@ -134,7 +134,7 @@ open class SwiftyDrawView: UIView {
         
         updateTouchPoints(for: touch, in: self)
         let newLine = createNewPath()
-        if let currentPath = pathArray.last {
+        if let currentPath = lines.last {
             currentPath.path.addPath(newLine)
         }
     }
@@ -155,38 +155,38 @@ open class SwiftyDrawView: UIView {
     
     /// Displays paths passed by replacing all other contents with provided paths
     public func display(lines: [Line]) {
-        pathArray = lines
+        lines = lines
         drawingHistory = lines
         setNeedsDisplay()
     }
     
     /// Determines whether a last change can be undone
     public var canUndo: Bool {
-        return pathArray.count > 0
+        return lines.count > 0
     }
     
     /// Determines whether an undone change can be redone
     public var canRedo: Bool {
-        return drawingHistory.count > pathArray.count
+        return drawingHistory.count > lines.count
     }
     
     /// Undo the last change
     public func undo() {
-        guard pathArray.count > 0 else { return }
-        pathArray.removeLast()
+        guard lines.count > 0 else { return }
+        lines.removeLast()
         setNeedsDisplay()
     }
     
     /// Redo the last change
     public func redo() {
-        guard let line = drawingHistory[safe: pathArray.count] else { return }
-        pathArray.append(line)
+        guard let line = drawingHistory[safe: lines.count] else { return }
+        lines.append(line)
         setNeedsDisplay()
     }
     
     /// Clear all stroked lines on canvas
     public func clear() {
-        pathArray = []
+        lines = []
         setNeedsDisplay()
     }
     
