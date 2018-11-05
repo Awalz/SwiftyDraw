@@ -155,7 +155,7 @@ open class SwiftyDrawView: UIView {
     
     /// Displays paths passed by replacing all other contents with provided paths
     public func display(lines: [Line]) {
-        lines = lines
+        self.lines = lines
         drawingHistory = lines
         setNeedsDisplay()
     }
