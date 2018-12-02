@@ -83,21 +83,21 @@ class ViewController: UIViewController {
         self.view.addSubview(yellowButton)
         
         undoButton = UIButton(frame: CGRect(x: self.view.frame.width - 60, y: 30, width: 60, height: 30))
-        undoButton.setTitleColor(UIColor.black, for: UIControlState())
-        undoButton.setTitle("undo", for: UIControlState())
+        undoButton.setTitleColor(UIColor.black, for: UIControl.State())
+        undoButton.setTitle("undo", for: UIControl.State())
         undoButton.addTarget(self, action: #selector(undo), for: .touchUpInside)
         self.view.addSubview(undoButton)
         
         deleteButton = UIButton(frame: CGRect(x: self.view.frame.width - 60, y: 60, width: 60, height: 30))
-        deleteButton.setTitleColor(UIColor.black, for: UIControlState())
-        deleteButton.setTitle("delete", for: UIControlState())
+        deleteButton.setTitleColor(UIColor.black, for: UIControl.State())
+        deleteButton.setTitle("delete", for: UIControl.State())
         deleteButton.addTarget(self, action: #selector(deleteDrawing), for: .touchUpInside)
         self.view.addSubview(deleteButton)
         
         //Add The Eraser Tool
         eraseButton = UIButton(frame: CGRect(x: self.view.frame.width - 60, y: 90, width: 60, height: 30))
-        eraseButton.setTitleColor(UIColor.black, for: UIControlState())
-        eraseButton.setTitle("erase", for: UIControlState())
+        eraseButton.setTitleColor(UIColor.black, for: UIControl.State())
+        eraseButton.setTitle("erase", for: UIControl.State())
         eraseButton.addTarget(self, action: #selector(erase), for: .touchUpInside)
         self.view.addSubview(eraseButton)
     }
@@ -120,36 +120,36 @@ class ViewController: UIViewController {
         self.view.addSubview(opacitySlider)
     }
     
-    func colorButtonPressed(button: ColorButton) {
+    @objc func colorButtonPressed(button: ColorButton) {
         drawView.brush.color = button.color
         drawView.brush.blendMode = .normal
     }
     
     
     /// Sets The Blend Mode To Clear So We Can Erase Our Content
-    func erase(){
+    @objc func erase(){
         
         drawView.brush.blendMode = .clear
         
     }
     
-    func undo() {
+    @objc func undo() {
         
         drawView.undo()
         
     }
     
-    func deleteDrawing() {
+    @objc func deleteDrawing() {
         drawView.clear()
         drawView.brush.blendMode = .normal
     }
     
-    func lineWidthSliderValueDidChange(sender:UISlider!) {
+    @objc func lineWidthSliderValueDidChange(sender:UISlider!) {
         drawView.brush.width = CGFloat(sender.value)
         drawView.brush.blendMode = .normal
     }
     
-    func lineOpacitySliderValueDidChange(sender:UISlider!) {
+    @objc func lineOpacitySliderValueDidChange(sender:UISlider!) {
         drawView.brush.opacity = CGFloat(sender.value)
         drawView.brush.blendMode = .normal
     }
