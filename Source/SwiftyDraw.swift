@@ -18,7 +18,7 @@ import UIKit
 // MARK: - Public Protocol Declarations
 
 /// SwiftyDrawView Delegate
-public protocol SwiftyDrawViewDelegate: class {
+public protocol SwiftyDrawViewDelegate: AnyObject {
     
     /**
      SwiftyDrawViewDelegate called when a touch gesture should begin on the SwiftyDrawView using given touch type
@@ -60,14 +60,14 @@ public protocol SwiftyDrawViewDelegate: class {
 open class SwiftyDrawView: UIView {
     
     /// Current brush being used for drawing
-    public var brush: Brush = Brush.default
+    public var brush: Brush = .default
     /// Sets whether touch gestures should be registered as drawing strokes on the current canvas
-    public var isEnabled: Bool = true
+    public var isEnabled = true
     /// Public SwiftyDrawView delegate
     public weak var delegate: SwiftyDrawViewDelegate?
     
-    public var lines: [Line]  = []
-    public var drawingHistory: [Line] = []
+    public var lines = [Line]()
+    public var drawingHistory = [Line]()
     private var currentPoint: CGPoint = .zero
     private var previousPoint: CGPoint = .zero
     private var previousPreviousPoint: CGPoint = .zero
@@ -85,7 +85,7 @@ open class SwiftyDrawView: UIView {
     /// Public init(frame:) implementation
     override public init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = UIColor.clear
+        self.backgroundColor = .clear
     }
     
     /// Public init(coder:) implementation
