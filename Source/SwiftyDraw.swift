@@ -66,8 +66,8 @@ open class SwiftyDrawView: UIView {
     /// Public SwiftyDrawView delegate
     public weak var delegate: SwiftyDrawViewDelegate?
     
-    public var lines = [Line]()
-    public var drawingHistory = [Line]()
+    public var line: [Line] = []
+    public var drawingHistory: [Line] = []
     private var currentPoint: CGPoint = .zero
     private var previousPoint: CGPoint = .zero
     private var previousPreviousPoint: CGPoint = .zero
