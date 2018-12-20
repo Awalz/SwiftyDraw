@@ -14,7 +14,7 @@ SwiftyDraw is a simple, light-weight drawing framework written in Swift. SwiftyD
 
 ## Requirements
 * iOS 9.1+
-* Swift 4
+* Swift 4.2
 
 ## Installation
 
