@@ -33,7 +33,7 @@ SwiftyDraw is also available through [Carthage](https://github.com/Carthage/Cart
 you can simply add the following line to your Cartfile for the latest version of SwiftyDraw.
 
 ```ruby
-github "awalz/swiftyDraw" "master"
+github "awalz/SwiftyDraw" "master"
 ```
 
 ### Manual Installation:
