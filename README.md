@@ -27,6 +27,15 @@ it, simply add the following line to your Podfile:
 pod 'SwiftyDraw'
 ```
 
+### Carthage
+
+SwiftyDraw is also available through [Carthage](https://github.com/Carthage/Carthage/blob/master/README.md). To install,
+you can simply add the following line to your Cartfile for the latest version of SwiftyDraw.
+
+```ruby
+github "awalz/swiftyDraw" "master"
+```
+
 ### Manual Installation:
 
 Simply copy the contents of the Source folder into your project.
@@ -43,7 +52,7 @@ Simply create a SwiftyDrawView and add it to your View Controller:
 let drawView = SwiftyDrawView(frame: self.view.frame)
 self.view.addSubview(drawView)
 ```
-    
+
 By default, the view will automatically respond to touch gestures and begin drawing. The default color is **black**.
 
 To disable drawing, simply set the `isEnabled` property to false:
@@ -91,7 +100,7 @@ The color of a line stroke can be changed by adjusting the `color` property of a
 ```swift
 drawView.brush.color = .red
 ```
-    
+
 <p align="center">
   or
 </p>
@@ -114,7 +123,7 @@ The opacity of a line stroke can be changed by adjusting the `lineOpacity` prope
 ```swift
 drawView.brush.opacity = CGFloat(0.5)
 ```
-    
+
 ## Editing
 
 ### Clear All:
@@ -123,20 +132,20 @@ If you wish to clear the entire canvas, simply call the `clear` function:
 
 ```swift
 drawView.clear()
-``` 
+```
 
 ### Drawing History:
 
 ```swift
 drawView.undo()
-``` 
+```
 
 ...and redo:
 
 ```swift
 drawView.redo()
-``` 
-    
+```
+
 ## Delegate
 
 SwiftyDraw has delegate functions to notify you when a user is interacting with a SwiftDrawView. To access these delegate methods, simply make your View Controller conform to the `SwiftyDrawViewDelegate` protocol:
@@ -150,20 +159,20 @@ class ViewController: UIViewController, SwiftyDrawViewDelegate
 ```swift
 /// SwiftyDrawViewDelegate called when a touch gesture should begin on the SwiftyDrawView using given touch type
 func swiftyDraw(shouldBeginDrawingIn drawingView: SwiftyDrawView, using touch: UITouch) -> Bool
-    
+
 /// SwiftyDrawViewDelegate called when a touch gesture begins on the SwiftyDrawView.
 func swiftyDraw(didBeginDrawingIn drawingView: SwiftyDrawView, using touch: UITouch)
 
 /// SwiftyDrawViewDelegate called when touch gestures continue on the SwiftyDrawView.
 func swiftyDraw(isDrawingIn drawingView: SwiftyDrawView, using touch: UITouch)
-    
+
 /// SwiftyDrawViewDelegate called when touches gestures finish on the SwiftyDrawView.
 func swiftyDraw(didFinishDrawingIn drawingView: SwiftyDrawView, using touch: UITouch)
-    
+
 /// SwiftyDrawViewDelegate called when there is an issue registering touch gestures on the  SwiftyDrawView.
 func swiftyDraw(didCancelDrawingIn drawingView: SwiftyDrawView, using touch: UITouch)
 ```
- 
+
 ### Contribution
 
 This is a project built by [Awalz](https://github.com/Awalz) and maintained & improved by [LinusGeffarth](https://github.com/LinusGeffarth).
