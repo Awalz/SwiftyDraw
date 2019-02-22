@@ -66,6 +66,23 @@ open class SwiftyDrawView: UIView {
     /// Public SwiftyDrawView delegate
     public weak var delegate: SwiftyDrawViewDelegate?
     
+    @available(iOS 9.1, *)
+    public enum TouchType: Equatable, CaseIterable {
+        case finger, pencil
+        
+        var uiTouchTypes: [UITouch.TouchType] {
+            switch self {
+            case .finger:
+                return [.direct, .indirect]
+            case .pencil:
+                return [.pencil, .stylus  ]
+            }
+        }
+    }
+    /// Determines which touch types are allowed to draw; default: `[.finger, .pencil]` (all)
+    @available(iOS 9.1, *)
+    public lazy var allowedTouchTypes: [TouchType] = [.finger, .pencil]
+    
     public var lines: [Line] = []
     public var drawingHistory: [Line] = []
     private var currentPoint: CGPoint = .zero
@@ -110,17 +127,19 @@ open class SwiftyDrawView: UIView {
             context.strokePath()
         }
     }
-
+    
     /// touchesBegan implementation to capture strokes
     override open func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first else { return }
+        guard isEnabled, let touch = touches.first else { return }
+        if #available(iOS 9.1, *) {
+            guard allowedTouchTypes.flatMap({ $0.uiTouchTypes }).contains(touch.type) else { return }
+        }
         guard delegate?.swiftyDraw(shouldBeginDrawingIn: self, using: touch) ?? true else { return }
-        
-        guard isEnabled else { return }
         delegate?.swiftyDraw(didBeginDrawingIn: self, using: touch)
         
         setTouchPoints(touch, view: self)
-        let newLine = Line(path: CGMutablePath(), brush: Brush(color: brush.color, width: brush.width, opacity: brush.opacity, blendMode: brush.blendMode))
+        let newLine = Line(path: CGMutablePath(),
+                           brush: Brush(color: brush.color, width: brush.width, opacity: brush.opacity, blendMode: brush.blendMode))
         newLine.path.addPath(createNewPath())
         lines.append(newLine)
         drawingHistory = lines // adding a new line should also update history
@@ -128,28 +147,28 @@ open class SwiftyDrawView: UIView {
     
     /// touchesMoves implementation to capture strokes
     override open func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard isEnabled else { return }
-        guard let touch = touches.first else { return }
+        guard isEnabled, let touch = touches.first else { return }
+        if #available(iOS 9.1, *) {
+            guard allowedTouchTypes.flatMap({ $0.uiTouchTypes }).contains(touch.type) else { return }
+        }
         delegate?.swiftyDraw(isDrawingIn: self, using: touch)
         
         updateTouchPoints(for: touch, in: self)
-        let newLine = createNewPath()
+        let newPath = createNewPath()
         if let currentPath = lines.last {
-            currentPath.path.addPath(newLine)
+            currentPath.path.addPath(newPath)
         }
     }
     
     /// touchedEnded implementation to capture strokes
     override open func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard isEnabled else { return }
-        guard let touch = touches.first else { return }
+        guard isEnabled, let touch = touches.first else { return }
         delegate?.swiftyDraw(didFinishDrawingIn: self, using: touch)
     }
     
     /// touchedCancelled implementation
     override open func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard isEnabled else { return }
-        guard let touch = touches.first else { return }
+        guard isEnabled, let touch = touches.first else { return }
         delegate?.swiftyDraw(didCancelDrawingIn: self, using: touch)
     }
     
