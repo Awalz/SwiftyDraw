@@ -262,6 +262,7 @@
                     </view>
                     <connections>
                         <outlet property="drawView" destination="Jqo-l8-EIq" id="1LA-Mx-mEv"/>
+                        <outlet property="eraserButton" destination="p8A-ij-1ZV" id="kce-EN-Pni"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

@@ -60,9 +60,21 @@ public protocol SwiftyDrawViewDelegate: AnyObject {
 open class SwiftyDrawView: UIView {
     
     /// Current brush being used for drawing
-    public var brush: Brush = .default
+    public var brush: Brush = .default {
+        didSet{
+            previousBrush = oldValue
+        }
+    }
     /// Sets whether touch gestures should be registered as drawing strokes on the current canvas
     public var isEnabled = true
+    /// Sets whether responde to Apple Pencil interactions, like the Double tap for Apple Pencil 2 to switch tools.
+    public var isPencilInteractive : Bool = true {
+        didSet{
+            if #available(iOS 12.1, *) {
+                pencilInteraction.isEnabled  = isPencilInteractive
+            }
+        }
+    }
     /// Public SwiftyDrawView delegate
     public weak var delegate: SwiftyDrawViewDelegate?
     
@@ -89,6 +101,13 @@ open class SwiftyDrawView: UIView {
     private var previousPoint: CGPoint = .zero
     private var previousPreviousPoint: CGPoint = .zero
     
+    //For pencil interactions
+    @available(iOS 12.1, *)
+    lazy private var pencilInteraction = UIPencilInteraction()
+    
+    /// Save the previous brush for Apple Pencil interaction Switch to previous tool
+    private var previousBrush: Brush = .default
+    
     public struct Line {
         public var path: CGMutablePath
         public var brush: Brush
@@ -103,12 +122,22 @@ open class SwiftyDrawView: UIView {
     override public init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .clear
+        //Receive pencil interaction if supported
+        if #available(iOS 12.1, *) {
+            pencilInteraction.delegate = self
+            self.addInteraction(pencilInteraction)
+        }
     }
     
     /// Public init(coder:) implementation
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.backgroundColor = .clear
+        //Receive pencil interaction if supported
+        if #available(iOS 12.1, *) {
+            pencilInteraction.delegate = self
+            self.addInteraction(pencilInteraction)
+        }
     }
     
     /// Overriding draw(rect:) to stroke paths
@@ -261,5 +290,22 @@ extension Collection {
     /// Returns the element at the specified index if it is within bounds, otherwise nil.
     subscript (safe index: Index) -> Element? {
         return indices.contains(index) ? self[index] : nil
+    }
+}
+
+@available(iOS 12.1, *)
+extension SwiftyDrawView : UIPencilInteractionDelegate{
+    public func pencilInteractionDidTap(_ interaction: UIPencilInteraction) {
+        let preference = UIPencilInteraction.preferredTapAction
+        if preference == .switchEraser {
+            let currentBlend = self.brush.blendMode
+            if currentBlend != .clear {
+                self.brush.blendMode = .clear
+            } else {
+                self.brush.blendMode = .normal
+            }
+        } else if preference == .switchPrevious{
+            self.brush = self.previousBrush
+        }
     }
 }

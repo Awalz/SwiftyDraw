@@ -137,6 +137,16 @@ drawView.undo()
 drawView.redo()
 ``` 
     
+
+## Apple Pencil Integration
+This is only supported for iOS 12.1 and above versions
+
+### Apple Pencil 2 Double Tap action
+#### Enable/ Disable pencil interaction
+Apple Pencil interaction is enabled by default, but you can set `drawView.isPencilInteractive` to change that setting.
+#### Pencil Events
+When double tapping the pencil, SwiftyDraw will check the user preferences set in the system. If the preference is set to switch to eraser, SwiftyDraw will switch between normal and erasing mode; if set to last used tool, SwiftyDraw will switch between current and previous brush.
+
 ## Delegate
 
 SwiftyDraw has delegate functions to notify you when a user is interacting with a SwiftDrawView. To access these delegate methods, simply make your View Controller conform to the `SwiftyDrawViewDelegate` protocol:
