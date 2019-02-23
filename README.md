@@ -27,6 +27,15 @@ it, simply add the following line to your Podfile:
 pod 'SwiftyDraw'
 ```
 
+### Carthage
+
+SwiftyDraw is also available through [Carthage](https://github.com/Carthage/Carthage/blob/master/README.md). To install,
+you can simply add the following line to your Cartfile for the latest version of SwiftyDraw.
+
+```ruby
+github "awalz/SwiftyDraw" "master"
+```
+
 ### Manual Installation:
 
 Simply copy the contents of the Source folder into your project.
