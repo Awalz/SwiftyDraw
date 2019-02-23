@@ -12,6 +12,7 @@ extension ViewController: SwiftyDrawViewDelegate {
 class ViewController: UIViewController {
     
     @IBOutlet var drawView: SwiftyDrawView!
+    @IBOutlet var eraserButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +39,17 @@ class ViewController: UIViewController {
     }
     
     @IBAction func activateEraser() {
-        drawView.brush.blendMode = .clear
+        if drawView.brush.blendMode == .normal{
+            //Switch to clear
+            drawView.brush.blendMode = .clear
+            eraserButton.tintColor = .red
+            eraserButton.setTitle("deactivate eraser", for: .normal)
+        } else {
+            //Switch to normal
+            drawView.brush.blendMode = .normal
+            eraserButton.tintColor = self.view.tintColor
+            eraserButton.setTitle("activate eraser", for: .normal)
+        }
     }
     
     @IBAction func clearCanvas() {
