@@ -148,7 +148,8 @@ drawView.redo()
     
 
 ## Apple Pencil Integration
-This is only supported for iOS 12.1 and above versions
+Apple Pencil can be used for drawing in a SwiftyDrawView, just like a finger.  
+Special features, however, regarding Apple Pencil 2 are only supported on iOS 12.1 and above versions.
 
 ### Apple Pencil 2 Double Tap action
 #### Enable/ Disable pencil interaction
