@@ -14,7 +14,7 @@ SwiftyDraw is a simple, light-weight drawing framework written in Swift. SwiftyD
 
 ## Requirements
 * iOS 9.1+
-* Swift 4
+* Swift 5.0
 
 ## Installation
 
@@ -25,6 +25,15 @@ it, simply add the following line to your Podfile:
 
 ```ruby
 pod 'SwiftyDraw'
+```
+
+### Carthage
+
+SwiftyDraw is also available through [Carthage](https://github.com/Carthage/Carthage/blob/master/README.md). To install,
+you can simply add the following line to your Cartfile for the latest version of SwiftyDraw.
+
+```ruby
+github "awalz/SwiftyDraw" "master"
 ```
 
 ### Manual Installation:
@@ -137,6 +146,17 @@ drawView.undo()
 drawView.redo()
 ``` 
     
+
+## Apple Pencil Integration
+Apple Pencil can be used for drawing in a SwiftyDrawView, just like a finger.  
+Special features, however, regarding Apple Pencil 2 are only supported on iOS 12.1 and above versions.
+
+### Apple Pencil 2 Double Tap action
+#### Enable/ Disable pencil interaction
+Apple Pencil interaction is enabled by default, but you can set `drawView.isPencilInteractive` to change that setting.
+#### Pencil Events
+When double tapping the pencil, SwiftyDraw will check the user preferences set in the system. If the preference is set to switch to eraser, SwiftyDraw will switch between normal and erasing mode; if set to last used tool, SwiftyDraw will switch between current and previous brush.
+
 ## Delegate
 
 SwiftyDraw has delegate functions to notify you when a user is interacting with a SwiftDrawView. To access these delegate methods, simply make your View Controller conform to the `SwiftyDrawViewDelegate` protocol:
