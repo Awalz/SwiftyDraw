@@ -8,9 +8,9 @@
 
 import UIKit
 
-public class Brush {
+public class Brush: Codable {
     
-    public var color: UIColor
+    public var color: Color
     /// Original brush width set when initializing the brush. Not affected by updating the brush width. Used to determine adjusted width
     private var _originalWidth: CGFloat
     /// Original brush width set when initializing the brush. Not affected by updating the brush width. Used to determine adjusted width
@@ -21,10 +21,10 @@ public class Brush {
     public var adjustedWidthFactor: CGFloat = 1
     
     /// Allows for actually erasing content, by setting it to `.clear`. Default is `.normal`
-    public var blendMode: CGBlendMode = .normal
+    public var blendMode: BlendMode = .normal
     
-    public init(color: UIColor = .black, width: CGFloat = 3, opacity: CGFloat = 1, adjustedWidthFactor: CGFloat = 1, blendMode: CGBlendMode = .normal) {
-        self.color = color
+    public init(color: UIColor = .black, width: CGFloat = 3, opacity: CGFloat = 1, adjustedWidthFactor: CGFloat = 1, blendMode: BlendMode = .normal) {
+        self.color = Color(color)
         self._originalWidth = width
         self.width = width
         self.opacity = opacity

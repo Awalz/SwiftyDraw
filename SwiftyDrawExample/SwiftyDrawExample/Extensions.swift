@@ -14,4 +14,21 @@ extension UIView {
         set { layer.cornerRadius = newValue }
         get { return layer.cornerRadius }
     }
+    
+    @IBInspectable var borderColor: UIColor {
+        set { layer.borderColor = newValue.cgColor }
+        get { return UIColor(cgColor: layer.borderColor!) }
+    }
+    
+    @IBInspectable var borderWidth: CGFloat {
+        set { layer.borderWidth = newValue }
+        get { return layer.borderWidth }
+    }
+}
+
+extension CGMutablePath {
+    func adding(path: CGPath) -> CGMutablePath {
+        addPath(path)
+        return self
+    }
 }

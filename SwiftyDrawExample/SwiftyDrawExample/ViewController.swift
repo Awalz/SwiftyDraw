@@ -3,20 +3,26 @@ import UIKit
 extension ViewController: SwiftyDrawViewDelegate {
     
     func swiftyDraw(shouldBeginDrawingIn drawingView: SwiftyDrawView, using touch: UITouch) -> Bool { return true }
-    func swiftyDraw(didBeginDrawingIn drawingView: SwiftyDrawView, using touch: UITouch) {  }
-    func swiftyDraw(isDrawingIn drawingView: SwiftyDrawView, using touch: UITouch) {  }
-    func swiftyDraw(didFinishDrawingIn drawingView: SwiftyDrawView, using touch: UITouch) {  }
-    func swiftyDraw(didCancelDrawingIn drawingView: SwiftyDrawView, using touch: UITouch) {  }
+    func swiftyDraw(didBeginDrawingIn    drawingView: SwiftyDrawView, using touch: UITouch) { updateHistoryButtons() }
+    func swiftyDraw(isDrawingIn          drawingView: SwiftyDrawView, using touch: UITouch) {  }
+    func swiftyDraw(didFinishDrawingIn   drawingView: SwiftyDrawView, using touch: UITouch) {  }
+    func swiftyDraw(didCancelDrawingIn   drawingView: SwiftyDrawView, using touch: UITouch) {  }
 }
 
 class ViewController: UIViewController {
     
-    @IBOutlet var drawView: SwiftyDrawView!
-    @IBOutlet var eraserButton: UIButton!
+    @IBOutlet weak var drawView: SwiftyDrawView!
+    @IBOutlet weak var eraserButton: UIButton!
+    
+    @IBOutlet weak var undoButton: UIButton!
+    @IBOutlet weak var redoButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        updateHistoryButtons()
+        
+        drawView.delegate = self
         drawView.brush.width = 7
         
         if #available(iOS 9.1, *) {
@@ -26,16 +32,23 @@ class ViewController: UIViewController {
     
     @IBAction func selectedColor(_ button: UIButton) {
         guard let color = button.backgroundColor else { return }
-        drawView.brush.color = color
+        drawView.brush.color = Color(color)
         drawView.brush.blendMode = .normal
     }
     
     @IBAction func undo() {
         drawView.undo()
+        updateHistoryButtons()
     }
     
     @IBAction func redo() {
         drawView.redo()
+        updateHistoryButtons()
+    }
+    
+    func updateHistoryButtons() {
+        undoButton.isEnabled = drawView.canUndo
+        redoButton.isEnabled = drawView.canRedo
     }
     
     @IBAction func activateEraser() {
@@ -55,6 +68,14 @@ class ViewController: UIViewController {
     @IBAction func clearCanvas() {
         drawView.clear()
         drawView.brush.blendMode = .normal
+    }
+    
+    @IBAction func saveToUserDefaults() {
+        
+    }
+    
+    @IBAction func readFromUserDefaults() {
+        
     }
     
     @IBAction func changedWidth(_ slider: UISlider) {
