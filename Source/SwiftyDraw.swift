@@ -169,7 +169,6 @@ open class SwiftyDrawView: UIView {
         setTouchPoints(touch, view: self)
         let newLine = Line(path: CGMutablePath(),
                            brush: Brush(color: brush.color, width: brush.width, opacity: brush.opacity, blendMode: brush.blendMode))
-        newLine.path.addPath(createNewPath())
         lines.append(newLine)
         drawingHistory = lines // adding a new line should also update history
     }
