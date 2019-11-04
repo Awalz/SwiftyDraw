@@ -61,19 +61,21 @@ open class SwiftyDrawView: UIView {
     
     /// Current brush being used for drawing
     public var brush: Brush = .default {
-        didSet{
+        didSet {
             previousBrush = oldValue
         }
     }
-    /// Sets whether touch gestures should be registered as drawing strokes on the current canvas
+    /// Determines whether touch gestures should be registered as drawing strokes on the current canvas
     public var isEnabled = true
     
-    /// sets whether the line drawn should be straight
-    public var isStraight = false
+    /// **WARNING:** experimental feature, may not work properly.
+    ///
+    /// Determines whether the line drawn should be straight
+    public var shouldDrawStraight = false
     
-    /// Sets whether responde to Apple Pencil interactions, like the Double tap for Apple Pencil 2 to switch tools.
+    /// Determines whether responde to Apple Pencil interactions, like the Double tap for Apple Pencil 2 to switch tools.
     public var isPencilInteractive : Bool = true {
-        didSet{
+        didSet {
             if #available(iOS 12.1, *) {
                 pencilInteraction.isEnabled  = isPencilInteractive
             }
@@ -188,7 +190,7 @@ open class SwiftyDrawView: UIView {
         
         updateTouchPoints(for: touch, in: self)
         
-        if isStraight {
+        if shouldDrawStraight {
             lines.removeLast()
             
             let newLine = Line(path: CGMutablePath(),

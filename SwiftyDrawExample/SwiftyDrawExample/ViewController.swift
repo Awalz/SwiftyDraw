@@ -12,6 +12,7 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var drawView: SwiftyDrawView!
     @IBOutlet weak var eraserButton: UIButton!
+    @IBOutlet weak var straightLineButton: UIButton!
     
     @IBOutlet weak var undoButton: UIButton!
     @IBOutlet weak var redoButton: UIButton!
@@ -50,8 +51,8 @@ class ViewController: UIViewController {
         redoButton.isEnabled = drawView.canRedo
     }
     
-    @IBAction func activateEraser() {
-        if drawView.brush.blendMode == .normal{
+    @IBAction func toggleEraser() {
+        if drawView.brush.blendMode == .normal {
             //Switch to clear
             drawView.brush.blendMode = .clear
             eraserButton.tintColor = .red
@@ -67,6 +68,17 @@ class ViewController: UIViewController {
     @IBAction func clearCanvas() {
         drawView.clear()
         drawView.brush.blendMode = .normal
+    }
+    
+    @IBAction func toggleStraightLine() {
+        drawView.shouldDrawStraight = !drawView.shouldDrawStraight
+        if drawView.shouldDrawStraight {
+            straightLineButton.tintColor = .red
+            straightLineButton.setTitle("deactivate straight line", for: .normal)
+        } else {
+            straightLineButton.tintColor = self.view.tintColor
+            straightLineButton.setTitle("activate straight line", for: .normal)
+        }
     }
         
     @IBAction func changedWidth(_ slider: UISlider) {
