@@ -1,7 +1,6 @@
 import UIKit
 
 extension ViewController: SwiftyDrawViewDelegate {
-    
     func swiftyDraw(shouldBeginDrawingIn drawingView: SwiftyDrawView, using touch: UITouch) -> Bool { return true }
     func swiftyDraw(didBeginDrawingIn    drawingView: SwiftyDrawView, using touch: UITouch) { updateHistoryButtons() }
     func swiftyDraw(isDrawingIn          drawingView: SwiftyDrawView, using touch: UITouch) {  }
@@ -69,15 +68,7 @@ class ViewController: UIViewController {
         drawView.clear()
         drawView.brush.blendMode = .normal
     }
-    
-    @IBAction func saveToUserDefaults() {
         
-    }
-    
-    @IBAction func readFromUserDefaults() {
-        
-    }
-    
     @IBAction func changedWidth(_ slider: UISlider) {
         drawView.brush.width = CGFloat(slider.value)
     }

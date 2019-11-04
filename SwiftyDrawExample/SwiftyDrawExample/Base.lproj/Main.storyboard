@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="ipad11_0rounded" orientation="landscape">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="ipad11_0rounded" orientation="landscape" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -209,24 +207,24 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="KOY-Z9-BOV">
-                                <rect key="frame" x="990" y="48" width="160" height="220"/>
+                                <rect key="frame" x="1048" y="24" width="102" height="140"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HvD-af-j12">
-                                        <rect key="frame" x="97" y="0.0" width="63" height="30"/>
+                                        <rect key="frame" x="39" y="0.0" width="63" height="30"/>
                                         <state key="normal" title="undo last"/>
                                         <connections>
                                             <action selector="undo" destination="BYZ-38-t0r" eventType="touchUpInside" id="lSE-z7-GXx"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5W0-QH-ugr">
-                                        <rect key="frame" x="100" y="30" width="60" height="30"/>
+                                        <rect key="frame" x="42" y="30" width="60" height="30"/>
                                         <state key="normal" title="redo last"/>
                                         <connections>
                                             <action selector="redo" destination="BYZ-38-t0r" eventType="touchUpInside" id="zhT-4A-xVW"/>
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4iX-SS-q0C" userLabel="spacing view">
-                                        <rect key="frame" x="159" y="60" width="1" height="20"/>
+                                        <rect key="frame" x="101" y="60" width="1" height="20"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="1" id="nN9-zi-Xoc"/>
@@ -234,39 +232,17 @@
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p8A-ij-1ZV">
-                                        <rect key="frame" x="58" y="80" width="102" height="30"/>
+                                        <rect key="frame" x="0.0" y="80" width="102" height="30"/>
                                         <state key="normal" title="activate eraser"/>
                                         <connections>
                                             <action selector="activateEraser" destination="BYZ-38-t0r" eventType="touchUpInside" id="FFA-bf-1ww"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="esB-7f-w8W">
-                                        <rect key="frame" x="74" y="110" width="86" height="30"/>
+                                        <rect key="frame" x="16" y="110" width="86" height="30"/>
                                         <state key="normal" title="clear canvas"/>
                                         <connections>
                                             <action selector="clearCanvas" destination="BYZ-38-t0r" eventType="touchUpInside" id="U2m-A5-dvl"/>
-                                        </connections>
-                                    </button>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Ql-xk-FwN" userLabel="spacing view">
-                                        <rect key="frame" x="159" y="140" width="1" height="20"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="1" id="1Si-vw-oU9"/>
-                                            <constraint firstAttribute="height" constant="20" id="Vcj-Mw-cDq"/>
-                                        </constraints>
-                                    </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U4l-ZZ-4oZ">
-                                        <rect key="frame" x="17" y="160" width="143" height="30"/>
-                                        <state key="normal" title="save to user defaults"/>
-                                        <connections>
-                                            <action selector="saveToUserDefaults" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ux9-l0-moB"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="37X-V3-xGJ">
-                                        <rect key="frame" x="0.0" y="190" width="160" height="30"/>
-                                        <state key="normal" title="read from user defaults"/>
-                                        <connections>
-                                            <action selector="readFromUserDefaults" destination="BYZ-38-t0r" eventType="touchUpInside" id="ilU-2m-qbU"/>
                                         </connections>
                                     </button>
                                 </subviews>
