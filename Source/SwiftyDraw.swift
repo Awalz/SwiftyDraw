@@ -18,7 +18,7 @@ import UIKit
 // MARK: - Public Protocol Declarations
 
 /// SwiftyDrawView Delegate
-public protocol SwiftyDrawViewDelegate: AnyObject {
+@objc public protocol SwiftyDrawViewDelegate: AnyObject {
     
     /**
      SwiftyDrawViewDelegate called when a touch gesture should begin on the SwiftyDrawView using given touch type
@@ -80,7 +80,7 @@ open class SwiftyDrawView: UIView {
         }
     }
     /// Public SwiftyDrawView delegate
-    public weak var delegate: SwiftyDrawViewDelegate?
+    @IBOutlet public weak var delegate: SwiftyDrawViewDelegate?
     
     @available(iOS 9.1, *)
     public enum TouchType: Equatable, CaseIterable {
@@ -106,7 +106,7 @@ open class SwiftyDrawView: UIView {
     private var previousPoint: CGPoint = .zero
     private var previousPreviousPoint: CGPoint = .zero
     
-    //For pencil interactions
+    // For pencil interactions
     @available(iOS 12.1, *)
     lazy private var pencilInteraction = UIPencilInteraction()
     
@@ -127,7 +127,7 @@ open class SwiftyDrawView: UIView {
     override public init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .clear
-        //Receive pencil interaction if supported
+        // receive pencil interaction if supported
         if #available(iOS 12.1, *) {
             pencilInteraction.delegate = self
             self.addInteraction(pencilInteraction)
@@ -153,8 +153,7 @@ open class SwiftyDrawView: UIView {
             context.setLineCap(.round)
             context.setLineJoin(.round)
             context.setLineWidth(line.brush.width)
-            // set blend mode so an eraser actually erases stuff
-            context.setBlendMode(line.brush.blendMode)
+            context.setBlendMode(line.brush.blendMode.cgBlendMode)
             context.setAlpha(line.brush.opacity)
             context.setStrokeColor(line.brush.color.cgColor)
             context.addPath(line.path)
@@ -172,7 +171,7 @@ open class SwiftyDrawView: UIView {
         delegate?.swiftyDraw(didBeginDrawingIn: self, using: touch)
         
         setTouchPoints(touch, view: self)
-        firstPoint = touch.location(in: self)       // for drawing straight lines
+        firstPoint = touch.location(in: self)
         let newLine = Line(path: CGMutablePath(),
                            brush: Brush(color: brush.color, width: brush.width, opacity: brush.opacity, blendMode: brush.blendMode))
         lines.append(newLine)
@@ -236,14 +235,14 @@ open class SwiftyDrawView: UIView {
     
     /// Undo the last change
     public func undo() {
-        guard lines.count > 0 else { return }
+        guard canUndo else { return }
         lines.removeLast()
         setNeedsDisplay()
     }
     
     /// Redo the last change
     public func redo() {
-        guard let line = drawingHistory[safe: lines.count] else { return }
+        guard canRedo, let line = drawingHistory[safe: lines.count] else { return }
         lines.append(line)
         setNeedsDisplay()
     }
@@ -335,7 +334,7 @@ extension SwiftyDrawView : UIPencilInteractionDelegate{
             } else {
                 self.brush.blendMode = .normal
             }
-        } else if preference == .switchPrevious{
+        } else if preference == .switchPrevious {
             self.brush = self.previousBrush
         }
     }
