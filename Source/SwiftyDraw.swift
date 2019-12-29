@@ -61,15 +61,21 @@ open class SwiftyDrawView: UIView {
     
     /// Current brush being used for drawing
     public var brush: Brush = .default {
-        didSet{
+        didSet {
             previousBrush = oldValue
         }
     }
-    /// Sets whether touch gestures should be registered as drawing strokes on the current canvas
+    /// Determines whether touch gestures should be registered as drawing strokes on the current canvas
     public var isEnabled = true
-    /// Sets whether responde to Apple Pencil interactions, like the Double tap for Apple Pencil 2 to switch tools.
+    
+    /// **WARNING:** experimental feature, may not work properly.
+    ///
+    /// Determines whether the line drawn should be straight
+    public var shouldDrawStraight = false
+    
+    /// Determines whether responde to Apple Pencil interactions, like the Double tap for Apple Pencil 2 to switch tools.
     public var isPencilInteractive : Bool = true {
-        didSet{
+        didSet {
             if #available(iOS 12.1, *) {
                 pencilInteraction.isEnabled  = isPencilInteractive
             }
@@ -95,9 +101,10 @@ open class SwiftyDrawView: UIView {
     @available(iOS 9.1, *)
     public lazy var allowedTouchTypes: [TouchType] = [.finger, .pencil]
     
-    public var lines: [Line] = []
-    public var drawingHistory: [Line] = []
-    private var currentPoint: CGPoint = .zero
+    public  var lines: [Line] = []
+    public  var drawingHistory: [Line] = []
+    public  var firstPoint: CGPoint = .zero      // created this variable
+    public  var currentPoint: CGPoint = .zero     // made public
     private var previousPoint: CGPoint = .zero
     private var previousPreviousPoint: CGPoint = .zero
     
@@ -166,13 +173,10 @@ open class SwiftyDrawView: UIView {
         delegate?.swiftyDraw(didBeginDrawingIn: self, using: touch)
         
         setTouchPoints(touch, view: self)
+        firstPoint = touch.location(in: self)
         let newLine = Line(path: CGMutablePath(),
                            brush: Brush(color: brush.color, width: brush.width, opacity: brush.opacity, blendMode: brush.blendMode))
-        newLine.path.addPath(createNewPath())
-        
-        lines.append(
-            Line(path: CGMutablePath().adding(path: createNewPath()), brush: Brush(color: brush.color, width: brush.width, opacity: brush.opacity, blendMode: brush.blendMode))
-        )
+        lines.append(newLine)
         drawingHistory = lines // adding a new line should also update history
     }
     
@@ -185,9 +189,21 @@ open class SwiftyDrawView: UIView {
         delegate?.swiftyDraw(isDrawingIn: self, using: touch)
         
         updateTouchPoints(for: touch, in: self)
-        let newPath = createNewPath()
-        if let currentPath = lines.last {
-            currentPath.path.addPath(newPath)
+        
+        if shouldDrawStraight {
+            lines.removeLast()
+            setNeedsDisplay()
+            
+            let newLine = Line(path: CGMutablePath(),
+                               brush: Brush(color: brush.color, width: brush.width, opacity: brush.opacity, blendMode: brush.blendMode))
+            newLine.path.addPath(createNewStraightPath())
+            lines.append(newLine)
+            drawingHistory = lines
+        } else {
+            let newPath = createNewPath()
+            if let currentPath = lines.last {
+                currentPath.path.addPath(newPath)
+            }
         }
     }
     
@@ -240,7 +256,7 @@ open class SwiftyDrawView: UIView {
         setNeedsDisplay()
     }
     
-/********************************** Private Functions **********************************/
+    /********************************** Private Functions **********************************/
     
     private func setTouchPoints(_ touch: UITouch,view: UIView) {
         previousPoint = touch.previousLocation(in: view)
@@ -261,6 +277,14 @@ open class SwiftyDrawView: UIView {
         return newPath
     }
     
+    private func createNewStraightPath() -> CGMutablePath {
+        let pt1 : CGPoint = firstPoint
+        let pt2 : CGPoint = currentPoint
+        let subPath = createStraightSubPath(pt1, mid2: pt2)
+        let newPath = addSubPathToPath(subPath)
+        return newPath
+    }
+    
     private func calculateMidPoint(_ p1 : CGPoint, p2 : CGPoint) -> CGPoint {
         return CGPoint(x: (p1.x + p2.x) * 0.5, y: (p1.y + p2.y) * 0.5);
     }
@@ -275,6 +299,13 @@ open class SwiftyDrawView: UIView {
         let subpath : CGMutablePath = CGMutablePath()
         subpath.move(to: CGPoint(x: mid1.x, y: mid1.y))
         subpath.addQuadCurve(to: CGPoint(x: mid2.x, y: mid2.y), control: CGPoint(x: previousPoint.x, y: previousPoint.y))
+        return subpath
+    }
+    
+    private func createStraightSubPath(_ mid1: CGPoint, mid2: CGPoint) -> CGMutablePath {
+        let subpath : CGMutablePath = CGMutablePath()
+        subpath.move(to: mid1)
+        subpath.addLine(to: mid2)
         return subpath
     }
     

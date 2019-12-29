@@ -36,33 +36,33 @@ public class Brush: Codable {
         guard #available(iOS 9.1, *), touch.type == .pencil else { return originalWidth }
         return (originalWidth*(1-adjustedWidthFactor/10*2)) + (adjustedWidthFactor/touch.altitudeAngle)
     }
-
+    
     public func adjustWidth(for touch: UITouch) {
         width = adjustedWidth(for: touch)
     }
-
+    
     // MARK: - Static brushes
     
     public static var `default`: Brush {
         return Brush(color: .black, width: 3, opacity: 1)
     }
-
+    
     public static var thin: Brush {
         return Brush(color: .black, width: 2, opacity: 1)
     }
-
+    
     public static var medium: Brush {
         return Brush(color: .black, width: 7, opacity: 1)
     }
-
+    
     public static var thick: Brush {
         return Brush(color: .black, width: 10, opacity: 1)
     }
-
+    
     public static var marker: Brush {
         return Brush(color: #colorLiteral(red: 0.920953393, green: 0.447560966, blue: 0.4741248488, alpha: 1), width: 10, opacity: 0.3)
     }
-
+    
     public static var eraser: Brush {
         return Brush(adjustedWidthFactor: 5, blendMode: .clear)
     }
@@ -77,8 +77,8 @@ extension Brush: Equatable, Comparable, CustomStringConvertible {
     public static func ==(lhs: Brush, rhs: Brush) -> Bool {
         return (
             lhs.color == rhs.color &&
-            lhs.originalWidth == rhs.originalWidth &&
-            lhs.opacity == rhs.opacity
+                lhs.originalWidth == rhs.originalWidth &&
+                lhs.opacity == rhs.opacity
         )
     }
     

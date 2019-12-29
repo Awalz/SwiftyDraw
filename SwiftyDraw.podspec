@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'SwiftyDraw'
-  s.version          = '2.1.5'
+  s.version          = '2.2'
   s.summary          = 'A simple, core graphics drawing framework written in Swift'
 
   s.description      = <<-DESC
@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.social_media_url = 'https://twitter.com/linusgeffarth'
 
   s.ios.deployment_target = '8.0'
-  s.swift_version = '4.2'
+  s.swift_version = '5.0'
 
   s.source_files = 'Source/**/*'
 

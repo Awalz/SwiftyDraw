@@ -207,24 +207,24 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="KOY-Z9-BOV">
-                                <rect key="frame" x="1048" y="24" width="102" height="140"/>
+                                <rect key="frame" x="1011" y="24" width="139" height="190"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HvD-af-j12">
-                                        <rect key="frame" x="39" y="0.0" width="63" height="30"/>
+                                        <rect key="frame" x="76" y="0.0" width="63" height="30"/>
                                         <state key="normal" title="undo last"/>
                                         <connections>
                                             <action selector="undo" destination="BYZ-38-t0r" eventType="touchUpInside" id="lSE-z7-GXx"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5W0-QH-ugr">
-                                        <rect key="frame" x="42" y="30" width="60" height="30"/>
+                                        <rect key="frame" x="79" y="30" width="60" height="30"/>
                                         <state key="normal" title="redo last"/>
                                         <connections>
                                             <action selector="redo" destination="BYZ-38-t0r" eventType="touchUpInside" id="zhT-4A-xVW"/>
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4iX-SS-q0C" userLabel="spacing view">
-                                        <rect key="frame" x="101" y="60" width="1" height="20"/>
+                                        <rect key="frame" x="138" y="60" width="1" height="20"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="1" id="nN9-zi-Xoc"/>
@@ -232,14 +232,29 @@
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p8A-ij-1ZV">
-                                        <rect key="frame" x="0.0" y="80" width="102" height="30"/>
+                                        <rect key="frame" x="37" y="80" width="102" height="30"/>
                                         <state key="normal" title="activate eraser"/>
                                         <connections>
-                                            <action selector="activateEraser" destination="BYZ-38-t0r" eventType="touchUpInside" id="FFA-bf-1ww"/>
+                                            <action selector="toggleEraser" destination="BYZ-38-t0r" eventType="touchUpInside" id="K1M-gE-mXI"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="daf-Np-eua">
+                                        <rect key="frame" x="0.0" y="110" width="139" height="30"/>
+                                        <state key="normal" title="activate straight line"/>
+                                        <connections>
+                                            <action selector="toggleStraightLine" destination="BYZ-38-t0r" eventType="touchUpInside" id="voc-cU-tG9"/>
+                                        </connections>
+                                    </button>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K8j-Iq-kHk" userLabel="spacing view">
+                                        <rect key="frame" x="138" y="140" width="1" height="20"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="BYC-lO-dZb"/>
+                                            <constraint firstAttribute="width" constant="1" id="V7g-CM-sYq"/>
+                                        </constraints>
+                                    </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="esB-7f-w8W">
-                                        <rect key="frame" x="16" y="110" width="86" height="30"/>
+                                        <rect key="frame" x="53" y="160" width="86" height="30"/>
                                         <state key="normal" title="clear canvas"/>
                                         <connections>
                                             <action selector="clearCanvas" destination="BYZ-38-t0r" eventType="touchUpInside" id="U2m-A5-dvl"/>
@@ -262,6 +277,7 @@
                         <outlet property="drawView" destination="Jqo-l8-EIq" id="1LA-Mx-mEv"/>
                         <outlet property="eraserButton" destination="p8A-ij-1ZV" id="kce-EN-Pni"/>
                         <outlet property="redoButton" destination="5W0-QH-ugr" id="3jP-IW-j34"/>
+                        <outlet property="straightLineButton" destination="daf-Np-eua" id="anP-0v-yRG"/>
                         <outlet property="undoButton" destination="HvD-af-j12" id="aKG-Cp-TNQ"/>
                     </connections>
                 </viewController>
