@@ -119,7 +119,7 @@ open class SwiftyDrawView: UIView {
         public var path: CGMutablePath
         public var brush: Brush
         
-        init(path: CGMutablePath, brush: Brush) {
+        public init(path: CGMutablePath, brush: Brush) {
             self.path = path
             self.brush = brush
         }
