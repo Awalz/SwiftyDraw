@@ -76,7 +76,7 @@ extension Brush: Equatable, Comparable, CustomStringConvertible {
     
     public static func ==(lhs: Brush, rhs: Brush) -> Bool {
         return (
-            lhs.color == rhs.color &&
+          lhs.color.uiColor == rhs.color.uiColor &&
                 lhs.originalWidth == rhs.originalWidth &&
                 lhs.opacity == rhs.opacity
         )

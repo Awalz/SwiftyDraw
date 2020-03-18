@@ -157,7 +157,7 @@ open class SwiftyDrawView: UIView {
             context.setLineWidth(line.brush.width)
             context.setBlendMode(line.brush.blendMode.cgBlendMode)
             context.setAlpha(line.brush.opacity)
-            context.setStrokeColor(line.brush.color.cgColor)
+          context.setStrokeColor(line.brush.color.uiColor.cgColor)
             context.addPath(line.path)
             context.strokePath()
         }
@@ -175,7 +175,7 @@ open class SwiftyDrawView: UIView {
         setTouchPoints(touch, view: self)
         firstPoint = touch.location(in: self)
         let newLine = Line(path: CGMutablePath(),
-                           brush: Brush(color: brush.color, width: brush.width, opacity: brush.opacity, blendMode: brush.blendMode))
+                           brush: Brush(color: brush.color.uiColor, width: brush.width, opacity: brush.opacity, blendMode: brush.blendMode))
         lines.append(newLine)
         drawingHistory = lines // adding a new line should also update history
     }
@@ -194,7 +194,7 @@ open class SwiftyDrawView: UIView {
             lines.removeLast()
             
             let newLine = Line(path: CGMutablePath(),
-                               brush: Brush(color: brush.color, width: brush.width, opacity: brush.opacity, blendMode: brush.blendMode))
+                               brush: Brush(color: brush.color.uiColor, width: brush.width, opacity: brush.opacity, blendMode: brush.blendMode))
             newLine.path.addPath(createNewStraightPath())
             lines.append(newLine)
             drawingHistory = lines
