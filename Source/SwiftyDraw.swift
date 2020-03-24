@@ -192,6 +192,7 @@ open class SwiftyDrawView: UIView {
         
         if shouldDrawStraight {
             lines.removeLast()
+            setNeedsDisplay()
             
             let newLine = Line(path: CGMutablePath(),
                                brush: Brush(color: brush.color.uiColor, width: brush.width, opacity: brush.opacity, blendMode: brush.blendMode))
