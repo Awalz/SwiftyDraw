@@ -71,7 +71,7 @@ open class SwiftyDrawView: UIView {
     /// Determines how touch gestures are treated
     /// draw - freehand draw
     /// line - draws straight lines **WARNING:** experimental feature, may not work properly.
-    public enum DrawMode { case draw, line  }
+    public enum DrawMode { case draw, line, ellipse, rect }
     public var drawMode:DrawMode = .draw
 
     /// Determines whether responde to Apple Pencil interactions, like the Double tap for Apple Pencil 2 to switch tools.
@@ -116,6 +116,8 @@ open class SwiftyDrawView: UIView {
     /// Save the previous brush for Apple Pencil interaction Switch to previous tool
     private var previousBrush: Brush = .default
     
+    public enum ShapeType { case rectangle, roundedRectangle, ellipse }
+
     public struct Line {
         public var path: CGMutablePath
         public var brush: Brush
@@ -207,6 +209,25 @@ open class SwiftyDrawView: UIView {
             if let currentPath = lines.last {
                 currentPath.path.addPath(newPath)
             }
+            break
+        case .ellipse:
+            lines.removeLast()
+            setNeedsDisplay()
+            let newLine = Line(path: CGMutablePath(),
+                               brush: Brush(color: brush.color.uiColor, width: brush.width, opacity: brush.opacity, blendMode: brush.blendMode))
+            newLine.path.addPath(createNewShape(type: .ellipse))
+            lines.append(newLine)
+            drawingHistory = lines
+            break
+        case .rect:
+            lines.removeLast()
+            setNeedsDisplay()
+            let newLine = Line(path: CGMutablePath(),
+                               brush: Brush(color: brush.color.uiColor, width: brush.width, opacity: brush.opacity, blendMode: brush.blendMode))
+            newLine.path.addPath(createNewShape(type: .rectangle))
+            lines.append(newLine)
+            drawingHistory = lines
+            break
         }
     }
     
@@ -286,6 +307,28 @@ open class SwiftyDrawView: UIView {
         let subPath = createStraightSubPath(pt1, mid2: pt2)
         let newPath = addSubPathToPath(subPath)
         return newPath
+    }
+    
+    private func createNewShape(type :ShapeType, corner:CGPoint = CGPoint(x: 1.0, y: 1.0)) -> CGMutablePath {
+        let pt1 : CGPoint = firstPoint
+        let pt2 : CGPoint = currentPoint
+        let width = abs(pt1.x - pt2.x)
+        let height = abs(pt1.y - pt2.y)
+        let newPath = CGMutablePath()
+        if width > 0, height > 0 {
+            let bounds = CGRect(x: min(pt1.x, pt2.x), y: min(pt1.y, pt2.y), width: width, height: height)
+            switch (type) {
+            case .ellipse:
+                newPath.addEllipse(in: bounds)
+                break
+            case .rectangle:
+                newPath.addRect(bounds)
+                break
+            case .roundedRectangle:
+                newPath.addRoundedRect(in: bounds, cornerWidth: corner.x, cornerHeight: corner.y)
+            }
+        }
+        return addSubPathToPath(newPath)
     }
     
     private func calculateMidPoint(_ p1 : CGPoint, p2 : CGPoint) -> CGPoint {
