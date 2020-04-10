@@ -71,8 +71,8 @@ class ViewController: UIViewController {
     }
     
     @IBAction func toggleStraightLine() {
-        drawView.shouldDrawStraight = !drawView.shouldDrawStraight
-        if drawView.shouldDrawStraight {
+        drawView.drawMode = drawView.drawMode == .line ? .draw : .line
+        if drawView.drawMode == .draw {
             straightLineButton.tintColor = .red
             straightLineButton.setTitle("deactivate straight line", for: .normal)
         } else {

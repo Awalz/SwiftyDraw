@@ -67,12 +67,13 @@ open class SwiftyDrawView: UIView {
     }
     /// Determines whether touch gestures should be registered as drawing strokes on the current canvas
     public var isEnabled = true
-    
-    /// **WARNING:** experimental feature, may not work properly.
-    ///
-    /// Determines whether the line drawn should be straight
-    public var shouldDrawStraight = false
-    
+
+    /// Determines how touch gestures are treated
+    /// draw - freehand draw
+    /// line - draws straight lines **WARNING:** experimental feature, may not work properly.
+    public enum DrawMode { case draw, line  }
+    public var drawMode:DrawMode = .draw
+
     /// Determines whether responde to Apple Pencil interactions, like the Double tap for Apple Pencil 2 to switch tools.
     public var isPencilInteractive : Bool = true {
         didSet {
@@ -190,7 +191,8 @@ open class SwiftyDrawView: UIView {
         
         updateTouchPoints(for: touch, in: self)
         
-        if shouldDrawStraight {
+        switch (drawMode) {
+        case .line:
             lines.removeLast()
             setNeedsDisplay()
             
@@ -199,7 +201,8 @@ open class SwiftyDrawView: UIView {
             newLine.path.addPath(createNewStraightPath())
             lines.append(newLine)
             drawingHistory = lines
-        } else {
+            break
+        case .draw:
             let newPath = createNewPath()
             if let currentPath = lines.last {
                 currentPath.path.addPath(newPath)
