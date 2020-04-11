@@ -73,6 +73,9 @@ open class SwiftyDrawView: UIView {
     /// line - draws straight lines **WARNING:** experimental feature, may not work properly.
     public enum DrawMode { case draw, line, ellipse, rect }
     public var drawMode:DrawMode = .draw
+    
+    /// Determines whether paths being draw would be filled or stroked.
+    public var shouldFillPath = false
 
     /// Determines whether responde to Apple Pencil interactions, like the Double tap for Apple Pencil 2 to switch tools.
     public var isPencilInteractive : Bool = true {
@@ -121,10 +124,12 @@ open class SwiftyDrawView: UIView {
     public struct Line {
         public var path: CGMutablePath
         public var brush: Brush
+        public var isFillPath: Bool
         
-        public init(path: CGMutablePath, brush: Brush) {
+        public init(path: CGMutablePath, brush: Brush, isFillPath: Bool) {
             self.path = path
             self.brush = brush
+            self.isFillPath = isFillPath
         }
     }
     
@@ -160,9 +165,17 @@ open class SwiftyDrawView: UIView {
             context.setLineWidth(line.brush.width)
             context.setBlendMode(line.brush.blendMode.cgBlendMode)
             context.setAlpha(line.brush.opacity)
-          context.setStrokeColor(line.brush.color.uiColor.cgColor)
-            context.addPath(line.path)
-            context.strokePath()
+            if (line.isFillPath)
+            {
+                context.setFillColor(line.brush.color.uiColor.cgColor)
+                context.addPath(line.path)
+                context.fillPath()
+            }
+            else {
+                context.setStrokeColor(line.brush.color.uiColor.cgColor)
+                context.addPath(line.path)
+                context.strokePath()
+            }
         }
     }
     
@@ -178,7 +191,7 @@ open class SwiftyDrawView: UIView {
         setTouchPoints(touch, view: self)
         firstPoint = touch.location(in: self)
         let newLine = Line(path: CGMutablePath(),
-                           brush: Brush(color: brush.color.uiColor, width: brush.width, opacity: brush.opacity, blendMode: brush.blendMode))
+                           brush: Brush(color: brush.color.uiColor, width: brush.width, opacity: brush.opacity, blendMode: brush.blendMode), isFillPath: drawMode != .draw && drawMode != .line ? shouldFillPath : false)
         lines.append(newLine)
         drawingHistory = lines // adding a new line should also update history
     }
@@ -199,7 +212,7 @@ open class SwiftyDrawView: UIView {
             setNeedsDisplay()
             
             let newLine = Line(path: CGMutablePath(),
-                               brush: Brush(color: brush.color.uiColor, width: brush.width, opacity: brush.opacity, blendMode: brush.blendMode))
+                               brush: Brush(color: brush.color.uiColor, width: brush.width, opacity: brush.opacity, blendMode: brush.blendMode), isFillPath: false)
             newLine.path.addPath(createNewStraightPath())
             lines.append(newLine)
             drawingHistory = lines
@@ -214,7 +227,7 @@ open class SwiftyDrawView: UIView {
             lines.removeLast()
             setNeedsDisplay()
             let newLine = Line(path: CGMutablePath(),
-                               brush: Brush(color: brush.color.uiColor, width: brush.width, opacity: brush.opacity, blendMode: brush.blendMode))
+                               brush: Brush(color: brush.color.uiColor, width: brush.width, opacity: brush.opacity, blendMode: brush.blendMode), isFillPath: shouldFillPath)
             newLine.path.addPath(createNewShape(type: .ellipse))
             lines.append(newLine)
             drawingHistory = lines
@@ -223,7 +236,7 @@ open class SwiftyDrawView: UIView {
             lines.removeLast()
             setNeedsDisplay()
             let newLine = Line(path: CGMutablePath(),
-                               brush: Brush(color: brush.color.uiColor, width: brush.width, opacity: brush.opacity, blendMode: brush.blendMode))
+                               brush: Brush(color: brush.color.uiColor, width: brush.width, opacity: brush.opacity, blendMode: brush.blendMode), isFillPath: shouldFillPath)
             newLine.path.addPath(createNewShape(type: .rectangle))
             lines.append(newLine)
             drawingHistory = lines

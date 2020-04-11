@@ -12,7 +12,7 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var drawView: SwiftyDrawView!
     @IBOutlet weak var eraserButton: UIButton!
-    @IBOutlet weak var straightLineButton: UIButton!
+    @IBOutlet weak var fillModeButton: UIButton!
     @IBOutlet weak var drawModeSelector: UISegmentedControl!
     
     @IBOutlet weak var undoButton: UIButton!
@@ -75,27 +75,31 @@ class ViewController: UIViewController {
         switch (drawModeSelector.selectedSegmentIndex) {
         case 1:
             drawView.drawMode = .line
+            fillModeButton.isHidden = true
             break
         case 2:
             drawView.drawMode = .ellipse
+            fillModeButton.isHidden = false
             break
         case 3:
             drawView.drawMode = .rect
+            fillModeButton.isHidden = false
             break
         default:
             drawView.drawMode = .draw
+            fillModeButton.isHidden = true
             break
         }
     }
     
     @IBAction func toggleStraightLine() {
-        drawView.drawMode = drawView.drawMode == .line ? .draw : .line
-        if drawView.drawMode == .draw {
-            straightLineButton.tintColor = .red
-            straightLineButton.setTitle("deactivate straight line", for: .normal)
+        drawView.shouldFillPath = !drawView.shouldFillPath
+        if (drawView.shouldFillPath) {
+            fillModeButton.tintColor = .red
+            fillModeButton.setTitle("activate stroke mode", for: .normal)
         } else {
-            straightLineButton.tintColor = self.view.tintColor
-            straightLineButton.setTitle("activate straight line", for: .normal)
+            fillModeButton.tintColor = self.view.tintColor
+            fillModeButton.setTitle("activate fill mode", for: .normal)
         }
     }
         
