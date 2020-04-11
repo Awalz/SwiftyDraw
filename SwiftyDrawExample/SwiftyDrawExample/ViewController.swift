@@ -13,6 +13,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var drawView: SwiftyDrawView!
     @IBOutlet weak var eraserButton: UIButton!
     @IBOutlet weak var straightLineButton: UIButton!
+    @IBOutlet weak var drawModeSelector: UISegmentedControl!
     
     @IBOutlet weak var undoButton: UIButton!
     @IBOutlet weak var redoButton: UIButton!
@@ -68,6 +69,23 @@ class ViewController: UIViewController {
     @IBAction func clearCanvas() {
         drawView.clear()
         drawView.brush.blendMode = .normal
+    }
+    
+    @IBAction func setDrawMode() {
+        switch (drawModeSelector.selectedSegmentIndex) {
+        case 1:
+            drawView.drawMode = .line
+            break
+        case 2:
+            drawView.drawMode = .ellipse
+            break
+        case 3:
+            drawView.drawMode = .rect
+            break
+        default:
+            drawView.drawMode = .draw
+            break
+        }
     }
     
     @IBAction func toggleStraightLine() {
