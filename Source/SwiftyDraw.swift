@@ -105,8 +105,8 @@ open class SwiftyDrawView: UIView {
     @available(iOS 9.1, *)
     public lazy var allowedTouchTypes: [TouchType] = [.finger, .pencil]
     
-    public  var lines: [Line] = []
-    public  var drawingHistory: [Line] = []
+    public  var drawItems: [DrawItem] = []
+    public  var drawingHistory: [DrawItem] = []
     public  var firstPoint: CGPoint = .zero      // created this variable
     public  var currentPoint: CGPoint = .zero     // made public
     private var previousPoint: CGPoint = .zero
@@ -121,7 +121,7 @@ open class SwiftyDrawView: UIView {
     
     public enum ShapeType { case rectangle, roundedRectangle, ellipse }
 
-    public struct Line {
+    public struct DrawItem {
         public var path: CGMutablePath
         public var brush: Brush
         public var isFillPath: Bool
@@ -159,21 +159,21 @@ open class SwiftyDrawView: UIView {
     override open func draw(_ rect: CGRect) {
         guard let context: CGContext = UIGraphicsGetCurrentContext() else { return }
         
-        for line in lines {
+        for item in drawItems {
             context.setLineCap(.round)
             context.setLineJoin(.round)
-            context.setLineWidth(line.brush.width)
-            context.setBlendMode(line.brush.blendMode.cgBlendMode)
-            context.setAlpha(line.brush.opacity)
-            if (line.isFillPath)
+            context.setLineWidth(item.brush.width)
+            context.setBlendMode(item.brush.blendMode.cgBlendMode)
+            context.setAlpha(item.brush.opacity)
+            if (item.isFillPath)
             {
-                context.setFillColor(line.brush.color.uiColor.cgColor)
-                context.addPath(line.path)
+                context.setFillColor(item.brush.color.uiColor.cgColor)
+                context.addPath(item.path)
                 context.fillPath()
             }
             else {
-                context.setStrokeColor(line.brush.color.uiColor.cgColor)
-                context.addPath(line.path)
+                context.setStrokeColor(item.brush.color.uiColor.cgColor)
+                context.addPath(item.path)
                 context.strokePath()
             }
         }
@@ -190,7 +190,7 @@ open class SwiftyDrawView: UIView {
         
         setTouchPoints(touch, view: self)
         firstPoint = touch.location(in: self)
-        let newLine = Line(path: CGMutablePath(),
+        let newLine = DrawItem(path: CGMutablePath(),
                            brush: Brush(color: brush.color.uiColor, width: brush.width, opacity: brush.opacity, blendMode: brush.blendMode), isFillPath: drawMode != .draw && drawMode != .line ? shouldFillPath : false)
         addLine(newLine)
     }
@@ -207,32 +207,31 @@ open class SwiftyDrawView: UIView {
         
         switch (drawMode) {
         case .line:
-            lines.removeLast()
+            drawItems.removeLast()
             setNeedsDisplay()
-            
-            let newLine = Line(path: CGMutablePath(),
+            let newLine = DrawItem(path: CGMutablePath(),
                                brush: Brush(color: brush.color.uiColor, width: brush.width, opacity: brush.opacity, blendMode: brush.blendMode), isFillPath: false)
             newLine.path.addPath(createNewStraightPath())
             addLine(newLine)
             break
         case .draw:
             let newPath = createNewPath()
-            if let currentPath = lines.last {
+            if let currentPath = drawItems.last {
                 currentPath.path.addPath(newPath)
             }
             break
         case .ellipse:
-            lines.removeLast()
+            drawItems.removeLast()
             setNeedsDisplay()
-            let newLine = Line(path: CGMutablePath(),
+            let newLine = DrawItem(path: CGMutablePath(),
                                brush: Brush(color: brush.color.uiColor, width: brush.width, opacity: brush.opacity, blendMode: brush.blendMode), isFillPath: shouldFillPath)
             newLine.path.addPath(createNewShape(type: .ellipse))
             addLine(newLine)
             break
         case .rect:
-            lines.removeLast()
+            drawItems.removeLast()
             setNeedsDisplay()
-            let newLine = Line(path: CGMutablePath(),
+            let newLine = DrawItem(path: CGMutablePath(),
                                brush: Brush(color: brush.color.uiColor, width: brush.width, opacity: brush.opacity, blendMode: brush.blendMode), isFillPath: shouldFillPath)
             newLine.path.addPath(createNewShape(type: .rectangle))
             addLine(newLine)
@@ -240,9 +239,9 @@ open class SwiftyDrawView: UIView {
         }
     }
     
-    func addLine(_ newLine: Line) {
-        lines.append(newLine)
-        drawingHistory = lines // adding a new line should also update history
+    func addLine(_ newLine: DrawItem) {
+        drawItems.append(newLine)
+        drawingHistory = drawItems // adding a new item should also update history
     }
     
     /// touchedEnded implementation to capture strokes
@@ -258,39 +257,39 @@ open class SwiftyDrawView: UIView {
     }
     
     /// Displays paths passed by replacing all other contents with provided paths
-    public func display(lines: [Line]) {
-        self.lines = lines
-        drawingHistory = lines
+    public func display(drawItems: [DrawItem]) {
+        self.drawItems = drawItems
+        drawingHistory = drawItems
         setNeedsDisplay()
     }
     
     /// Determines whether a last change can be undone
     public var canUndo: Bool {
-        return lines.count > 0
+        return drawItems.count > 0
     }
     
     /// Determines whether an undone change can be redone
     public var canRedo: Bool {
-        return drawingHistory.count > lines.count
+        return drawingHistory.count > drawItems.count
     }
     
     /// Undo the last change
     public func undo() {
         guard canUndo else { return }
-        lines.removeLast()
+        drawItems.removeLast()
         setNeedsDisplay()
     }
     
     /// Redo the last change
     public func redo() {
-        guard canRedo, let line = drawingHistory[safe: lines.count] else { return }
-        lines.append(line)
+        guard canRedo, let line = drawingHistory[safe: drawItems.count] else { return }
+        drawItems.append(line)
         setNeedsDisplay()
     }
     
     /// Clear all stroked lines on canvas
     public func clear() {
-        lines = []
+        drawItems = []
         setNeedsDisplay()
     }
     
