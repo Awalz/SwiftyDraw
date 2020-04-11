@@ -192,8 +192,7 @@ open class SwiftyDrawView: UIView {
         firstPoint = touch.location(in: self)
         let newLine = Line(path: CGMutablePath(),
                            brush: Brush(color: brush.color.uiColor, width: brush.width, opacity: brush.opacity, blendMode: brush.blendMode), isFillPath: drawMode != .draw && drawMode != .line ? shouldFillPath : false)
-        lines.append(newLine)
-        drawingHistory = lines // adding a new line should also update history
+        addLine(newLine)
     }
     
     /// touchesMoves implementation to capture strokes
@@ -214,8 +213,7 @@ open class SwiftyDrawView: UIView {
             let newLine = Line(path: CGMutablePath(),
                                brush: Brush(color: brush.color.uiColor, width: brush.width, opacity: brush.opacity, blendMode: brush.blendMode), isFillPath: false)
             newLine.path.addPath(createNewStraightPath())
-            lines.append(newLine)
-            drawingHistory = lines
+            addLine(newLine)
             break
         case .draw:
             let newPath = createNewPath()
@@ -229,8 +227,7 @@ open class SwiftyDrawView: UIView {
             let newLine = Line(path: CGMutablePath(),
                                brush: Brush(color: brush.color.uiColor, width: brush.width, opacity: brush.opacity, blendMode: brush.blendMode), isFillPath: shouldFillPath)
             newLine.path.addPath(createNewShape(type: .ellipse))
-            lines.append(newLine)
-            drawingHistory = lines
+            addLine(newLine)
             break
         case .rect:
             lines.removeLast()
@@ -238,10 +235,14 @@ open class SwiftyDrawView: UIView {
             let newLine = Line(path: CGMutablePath(),
                                brush: Brush(color: brush.color.uiColor, width: brush.width, opacity: brush.opacity, blendMode: brush.blendMode), isFillPath: shouldFillPath)
             newLine.path.addPath(createNewShape(type: .rectangle))
-            lines.append(newLine)
-            drawingHistory = lines
+            addLine(newLine)
             break
         }
+    }
+    
+    func addLine(_ newLine: Line) {
+        lines.append(newLine)
+        drawingHistory = lines // adding a new line should also update history
     }
     
     /// touchedEnded implementation to capture strokes
