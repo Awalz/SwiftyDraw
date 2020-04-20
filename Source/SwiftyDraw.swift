@@ -67,12 +67,16 @@ open class SwiftyDrawView: UIView {
     }
     /// Determines whether touch gestures should be registered as drawing strokes on the current canvas
     public var isEnabled = true
+
+    /// Determines how touch gestures are treated
+    /// draw - freehand draw
+    /// line - draws straight lines **WARNING:** experimental feature, may not work properly.
+    public enum DrawMode { case draw, line, ellipse, rect }
+    public var drawMode:DrawMode = .draw
     
-    /// **WARNING:** experimental feature, may not work properly.
-    ///
-    /// Determines whether the line drawn should be straight
-    public var shouldDrawStraight = false
-    
+    /// Determines whether paths being draw would be filled or stroked.
+    public var shouldFillPath = false
+
     /// Determines whether responde to Apple Pencil interactions, like the Double tap for Apple Pencil 2 to switch tools.
     public var isPencilInteractive : Bool = true {
         didSet {
@@ -101,8 +105,8 @@ open class SwiftyDrawView: UIView {
     @available(iOS 9.1, *)
     public lazy var allowedTouchTypes: [TouchType] = [.finger, .pencil]
     
-    public  var lines: [Line] = []
-    public  var drawingHistory: [Line] = []
+    public  var drawItems: [DrawItem] = []
+    public  var drawingHistory: [DrawItem] = []
     public  var firstPoint: CGPoint = .zero      // created this variable
     public  var currentPoint: CGPoint = .zero     // made public
     private var previousPoint: CGPoint = .zero
@@ -115,13 +119,17 @@ open class SwiftyDrawView: UIView {
     /// Save the previous brush for Apple Pencil interaction Switch to previous tool
     private var previousBrush: Brush = .default
     
-    public struct Line {
+    public enum ShapeType { case rectangle, roundedRectangle, ellipse }
+
+    public struct DrawItem {
         public var path: CGMutablePath
         public var brush: Brush
+        public var isFillPath: Bool
         
-        public init(path: CGMutablePath, brush: Brush) {
+        public init(path: CGMutablePath, brush: Brush, isFillPath: Bool) {
             self.path = path
             self.brush = brush
+            self.isFillPath = isFillPath
         }
     }
     
@@ -151,15 +159,23 @@ open class SwiftyDrawView: UIView {
     override open func draw(_ rect: CGRect) {
         guard let context: CGContext = UIGraphicsGetCurrentContext() else { return }
         
-        for line in lines {
+        for item in drawItems {
             context.setLineCap(.round)
             context.setLineJoin(.round)
-            context.setLineWidth(line.brush.width)
-            context.setBlendMode(line.brush.blendMode.cgBlendMode)
-            context.setAlpha(line.brush.opacity)
-          context.setStrokeColor(line.brush.color.uiColor.cgColor)
-            context.addPath(line.path)
-            context.strokePath()
+            context.setLineWidth(item.brush.width)
+            context.setBlendMode(item.brush.blendMode.cgBlendMode)
+            context.setAlpha(item.brush.opacity)
+            if (item.isFillPath)
+            {
+                context.setFillColor(item.brush.color.uiColor.cgColor)
+                context.addPath(item.path)
+                context.fillPath()
+            }
+            else {
+                context.setStrokeColor(item.brush.color.uiColor.cgColor)
+                context.addPath(item.path)
+                context.strokePath()
+            }
         }
     }
     
@@ -174,10 +190,9 @@ open class SwiftyDrawView: UIView {
         
         setTouchPoints(touch, view: self)
         firstPoint = touch.location(in: self)
-        let newLine = Line(path: CGMutablePath(),
-                           brush: Brush(color: brush.color.uiColor, width: brush.width, opacity: brush.opacity, blendMode: brush.blendMode))
-        lines.append(newLine)
-        drawingHistory = lines // adding a new line should also update history
+        let newLine = DrawItem(path: CGMutablePath(),
+                           brush: Brush(color: brush.color.uiColor, width: brush.width, opacity: brush.opacity, blendMode: brush.blendMode), isFillPath: drawMode != .draw && drawMode != .line ? shouldFillPath : false)
+        addLine(newLine)
     }
     
     /// touchesMoves implementation to capture strokes
@@ -190,21 +205,43 @@ open class SwiftyDrawView: UIView {
         
         updateTouchPoints(for: touch, in: self)
         
-        if shouldDrawStraight {
-            lines.removeLast()
+        switch (drawMode) {
+        case .line:
+            drawItems.removeLast()
             setNeedsDisplay()
-            
-            let newLine = Line(path: CGMutablePath(),
-                               brush: Brush(color: brush.color.uiColor, width: brush.width, opacity: brush.opacity, blendMode: brush.blendMode))
+            let newLine = DrawItem(path: CGMutablePath(),
+                               brush: Brush(color: brush.color.uiColor, width: brush.width, opacity: brush.opacity, blendMode: brush.blendMode), isFillPath: false)
             newLine.path.addPath(createNewStraightPath())
-            lines.append(newLine)
-            drawingHistory = lines
-        } else {
+            addLine(newLine)
+            break
+        case .draw:
             let newPath = createNewPath()
-            if let currentPath = lines.last {
+            if let currentPath = drawItems.last {
                 currentPath.path.addPath(newPath)
             }
+            break
+        case .ellipse:
+            drawItems.removeLast()
+            setNeedsDisplay()
+            let newLine = DrawItem(path: CGMutablePath(),
+                               brush: Brush(color: brush.color.uiColor, width: brush.width, opacity: brush.opacity, blendMode: brush.blendMode), isFillPath: shouldFillPath)
+            newLine.path.addPath(createNewShape(type: .ellipse))
+            addLine(newLine)
+            break
+        case .rect:
+            drawItems.removeLast()
+            setNeedsDisplay()
+            let newLine = DrawItem(path: CGMutablePath(),
+                               brush: Brush(color: brush.color.uiColor, width: brush.width, opacity: brush.opacity, blendMode: brush.blendMode), isFillPath: shouldFillPath)
+            newLine.path.addPath(createNewShape(type: .rectangle))
+            addLine(newLine)
+            break
         }
+    }
+    
+    func addLine(_ newLine: DrawItem) {
+        drawItems.append(newLine)
+        drawingHistory = drawItems // adding a new item should also update history
     }
     
     /// touchedEnded implementation to capture strokes
@@ -220,39 +257,39 @@ open class SwiftyDrawView: UIView {
     }
     
     /// Displays paths passed by replacing all other contents with provided paths
-    public func display(lines: [Line]) {
-        self.lines = lines
-        drawingHistory = lines
+    public func display(drawItems: [DrawItem]) {
+        self.drawItems = drawItems
+        drawingHistory = drawItems
         setNeedsDisplay()
     }
     
     /// Determines whether a last change can be undone
     public var canUndo: Bool {
-        return lines.count > 0
+        return drawItems.count > 0
     }
     
     /// Determines whether an undone change can be redone
     public var canRedo: Bool {
-        return drawingHistory.count > lines.count
+        return drawingHistory.count > drawItems.count
     }
     
     /// Undo the last change
     public func undo() {
         guard canUndo else { return }
-        lines.removeLast()
+        drawItems.removeLast()
         setNeedsDisplay()
     }
     
     /// Redo the last change
     public func redo() {
-        guard canRedo, let line = drawingHistory[safe: lines.count] else { return }
-        lines.append(line)
+        guard canRedo, let line = drawingHistory[safe: drawItems.count] else { return }
+        drawItems.append(line)
         setNeedsDisplay()
     }
     
     /// Clear all stroked lines on canvas
     public func clear() {
-        lines = []
+        drawItems = []
         setNeedsDisplay()
     }
     
@@ -283,6 +320,28 @@ open class SwiftyDrawView: UIView {
         let subPath = createStraightSubPath(pt1, mid2: pt2)
         let newPath = addSubPathToPath(subPath)
         return newPath
+    }
+    
+    private func createNewShape(type :ShapeType, corner:CGPoint = CGPoint(x: 1.0, y: 1.0)) -> CGMutablePath {
+        let pt1 : CGPoint = firstPoint
+        let pt2 : CGPoint = currentPoint
+        let width = abs(pt1.x - pt2.x)
+        let height = abs(pt1.y - pt2.y)
+        let newPath = CGMutablePath()
+        if width > 0, height > 0 {
+            let bounds = CGRect(x: min(pt1.x, pt2.x), y: min(pt1.y, pt2.y), width: width, height: height)
+            switch (type) {
+            case .ellipse:
+                newPath.addEllipse(in: bounds)
+                break
+            case .rectangle:
+                newPath.addRect(bounds)
+                break
+            case .roundedRectangle:
+                newPath.addRoundedRect(in: bounds, cornerWidth: corner.x, cornerHeight: corner.y)
+            }
+        }
+        return addSubPathToPath(newPath)
     }
     
     private func calculateMidPoint(_ p1 : CGPoint, p2 : CGPoint) -> CGPoint {

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="ipad11_0rounded" orientation="landscape" layout="fullscreen" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -16,7 +16,7 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="1194" height="834"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jqo-l8-EIq" customClass="SwiftyDrawView" customModule="SwiftyDrawExample" customModuleProvider="target">
@@ -25,7 +25,7 @@
                                 <color key="backgroundColor" red="0.96470588235294119" green="0.96470588235294119" blue="0.96470588235294119" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="v0h-d1-099">
-                                <rect key="frame" x="160" y="665" width="200" height="125"/>
+                                <rect key="frame" x="160" y="713" width="200" height="125"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="oat-aU-2H3">
                                         <rect key="frame" x="0.0" y="0.0" width="200" height="50.5"/>
@@ -70,7 +70,7 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="fna-t5-PmT">
-                                <rect key="frame" x="36" y="646" width="92" height="144"/>
+                                <rect key="frame" x="36" y="694" width="92" height="144"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="hRt-yt-d5d">
                                         <rect key="frame" x="0.0" y="0.0" width="40" height="144"/>
@@ -207,24 +207,24 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="KOY-Z9-BOV">
-                                <rect key="frame" x="1011" y="24" width="139" height="190"/>
+                                <rect key="frame" x="131" y="68" width="239" height="221"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HvD-af-j12">
-                                        <rect key="frame" x="76" y="0.0" width="63" height="30"/>
+                                        <rect key="frame" x="176" y="0.0" width="63" height="30"/>
                                         <state key="normal" title="undo last"/>
                                         <connections>
                                             <action selector="undo" destination="BYZ-38-t0r" eventType="touchUpInside" id="lSE-z7-GXx"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5W0-QH-ugr">
-                                        <rect key="frame" x="79" y="30" width="60" height="30"/>
+                                        <rect key="frame" x="179" y="30" width="60" height="30"/>
                                         <state key="normal" title="redo last"/>
                                         <connections>
                                             <action selector="redo" destination="BYZ-38-t0r" eventType="touchUpInside" id="zhT-4A-xVW"/>
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4iX-SS-q0C" userLabel="spacing view">
-                                        <rect key="frame" x="138" y="60" width="1" height="20"/>
+                                        <rect key="frame" x="238" y="60" width="1" height="20"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="1" id="nN9-zi-Xoc"/>
@@ -232,21 +232,39 @@
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p8A-ij-1ZV">
-                                        <rect key="frame" x="37" y="80" width="102" height="30"/>
+                                        <rect key="frame" x="137" y="80" width="102" height="30"/>
                                         <state key="normal" title="activate eraser"/>
                                         <connections>
                                             <action selector="toggleEraser" destination="BYZ-38-t0r" eventType="touchUpInside" id="K1M-gE-mXI"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="daf-Np-eua">
-                                        <rect key="frame" x="0.0" y="110" width="139" height="30"/>
-                                        <state key="normal" title="activate straight line"/>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bordered" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Y2m-U0-61l" userLabel="Draw Mode">
+                                        <rect key="frame" x="0.0" y="110" width="239" height="32"/>
+                                        <segments>
+                                            <segment title="draw"/>
+                                            <segment title="line"/>
+                                            <segment title="ellipse"/>
+                                            <segment title="rect"/>
+                                        </segments>
+                                        <color key="selectedSegmentTintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="0.0"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="setDrawMode" destination="BYZ-38-t0r" eventType="valueChanged" id="e65-uL-mSh"/>
+                                        </connections>
+                                    </segmentedControl>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="daf-Np-eua" userLabel="Fill Mode Button">
+                                        <rect key="frame" x="54" y="141" width="117" height="0.0"/>
+                                        <state key="normal" title="activate fill mode"/>
                                         <connections>
                                             <action selector="toggleStraightLine" destination="BYZ-38-t0r" eventType="touchUpInside" id="voc-cU-tG9"/>
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K8j-Iq-kHk" userLabel="spacing view">
-                                        <rect key="frame" x="138" y="140" width="1" height="20"/>
+                                        <rect key="frame" x="170" y="141" width="1" height="20"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="BYC-lO-dZb"/>
@@ -254,7 +272,7 @@
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="esB-7f-w8W">
-                                        <rect key="frame" x="53" y="160" width="86" height="30"/>
+                                        <rect key="frame" x="85" y="161" width="86" height="30"/>
                                         <state key="normal" title="clear canvas"/>
                                         <connections>
                                             <action selector="clearCanvas" destination="BYZ-38-t0r" eventType="touchUpInside" id="U2m-A5-dvl"/>
@@ -274,10 +292,11 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="drawModeSelector" destination="Y2m-U0-61l" id="9nI-Pd-gyo"/>
                         <outlet property="drawView" destination="Jqo-l8-EIq" id="1LA-Mx-mEv"/>
                         <outlet property="eraserButton" destination="p8A-ij-1ZV" id="kce-EN-Pni"/>
+                        <outlet property="fillModeButton" destination="daf-Np-eua" id="Fri-2K-beu"/>
                         <outlet property="redoButton" destination="5W0-QH-ugr" id="3jP-IW-j34"/>
-                        <outlet property="straightLineButton" destination="daf-Np-eua" id="anP-0v-yRG"/>
                         <outlet property="undoButton" destination="HvD-af-j12" id="aKG-Cp-TNQ"/>
                     </connections>
                 </viewController>
