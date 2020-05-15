@@ -56,7 +56,7 @@ public class Brush: Codable {
     }
     
     public static var thick: Brush {
-        return Brush(color: .black, width: 10, opacity: 1)
+        return Brush(color: .black, width: 12, opacity: 1)
     }
     
     public static var marker: Brush {
