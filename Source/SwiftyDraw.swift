@@ -401,3 +401,38 @@ extension SwiftyDrawView : UIPencilInteractionDelegate{
         }
     }
 }
+
+extension SwiftyDrawView.DrawItem: Codable {
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        let pathData = try container.decode(Data.self, forKey: .path)
+        let uiBezierPath = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(pathData) as! UIBezierPath
+        path = uiBezierPath.cgPath as! CGMutablePath
+    
+        brush = try container.decode(Brush.self, forKey: .brush)
+        isFillPath = try container.decode(Bool.self, forKey: .isFillPath)
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        let uiBezierPath = UIBezierPath(cgPath: path)
+        var pathData: Data?
+        if #available(iOS 11.0, *) {
+            pathData = try NSKeyedArchiver.archivedData(withRootObject: uiBezierPath, requiringSecureCoding: false)
+        } else {
+            pathData = NSKeyedArchiver.archivedData(withRootObject: uiBezierPath)
+        }
+        try container.encode(pathData!, forKey: .path)
+        
+        try container.encode(brush, forKey: .brush)
+        try container.encode(isFillPath, forKey: .isFillPath)
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case brush
+        case path
+        case isFillPath
+    }
+}
