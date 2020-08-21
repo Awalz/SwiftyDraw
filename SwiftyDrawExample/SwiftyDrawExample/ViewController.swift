@@ -34,7 +34,7 @@ class ViewController: UIViewController {
     @IBAction func selectedColor(_ button: UIButton) {
         guard let color = button.backgroundColor else { return }
         drawView.brush.color = Color(color)
-        deactivateErasor()
+        deactivateEraser()
     }
     
     @IBAction func undo() {
@@ -55,16 +55,16 @@ class ViewController: UIViewController {
     @IBAction func toggleEraser() {
         if drawView.brush.blendMode == .normal {
             //Switch to clear
-            activateErasor()
+            activateEraser()
         } else {
             //Switch to normal
-            deactivateErasor()
+            deactivateEraser()
         }
     }
     
     @IBAction func clearCanvas() {
         drawView.clear()
-        deactivateErasor()
+        deactivateEraser()
     }
     
     @IBAction func setDrawMode() {
@@ -105,16 +105,16 @@ class ViewController: UIViewController {
     
     @IBAction func changedOpacity(_ slider: UISlider) {
         drawView.brush.opacity = CGFloat(slider.value)
-        deactivateErasor()
+        deactivateEraser()
     }
     
-    func activateErasor() {
+    func activateEraser() {
         drawView.brush.blendMode = .clear
         eraserButton.tintColor = .red
         eraserButton.setTitle("deactivate eraser", for: .normal)
     }
     
-    func deactivateErasor() {
+    func deactivateEraser() {
         drawView.brush.blendMode = .normal
         eraserButton.tintColor = self.view.tintColor
         eraserButton.setTitle("activate eraser", for: .normal)
