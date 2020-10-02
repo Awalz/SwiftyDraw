@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'SwiftyDraw'
-  s.version          = '2.4'
+  s.version          = '2.4.1'
   s.summary          = 'A simple, core graphics drawing framework written in Swift'
 
   s.description      = <<-DESC
