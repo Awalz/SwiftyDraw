@@ -56,6 +56,15 @@ import UIKit
     func swiftyDraw(didCancelDrawingIn drawingView: SwiftyDrawView, using touch: UITouch)
 }
 
+protocol PencilInteractionSupport {
+    @available(iOS 12.1, *)
+    var delegate: UIPencilInteractionDelegate? { get set }
+    var isEnabled: Bool { get set }
+}
+
+@available(iOS 12.1, *)
+extension UIPencilInteraction: PencilInteractionSupport {}
+
 /// UIView Subclass where touch gestures are translated into Core Graphics drawing
 open class SwiftyDrawView: UIView {
     
@@ -81,14 +90,13 @@ open class SwiftyDrawView: UIView {
     public var isPencilInteractive : Bool = true {
         didSet {
             if #available(iOS 12.1, *) {
-                pencilInteraction.isEnabled  = isPencilInteractive
+                pencilInteraction?.isEnabled  = isPencilInteractive
             }
         }
     }
     /// Public SwiftyDrawView delegate
     @IBOutlet public weak var delegate: SwiftyDrawViewDelegate?
     
-    @available(iOS 9.1, *)
     public enum TouchType: Equatable, CaseIterable {
         case finger, pencil
         
@@ -97,12 +105,15 @@ open class SwiftyDrawView: UIView {
             case .finger:
                 return [.direct, .indirect]
             case .pencil:
-                return [.pencil, .stylus  ]
+                if #available(iOS 9.1, *) {
+                    return [.pencil, .stylus]
+                } else {
+                    return []
+                }
             }
         }
     }
     /// Determines which touch types are allowed to draw; default: `[.finger, .pencil]` (all)
-    @available(iOS 9.1, *)
     public lazy var allowedTouchTypes: [TouchType] = [.finger, .pencil]
     
     public  var drawItems: [DrawItem] = []
@@ -113,8 +124,7 @@ open class SwiftyDrawView: UIView {
     private var previousPreviousPoint: CGPoint = .zero
     
     // For pencil interactions
-    @available(iOS 12.1, *)
-    lazy private var pencilInteraction = UIPencilInteraction()
+    private var pencilInteraction: PencilInteractionSupport?
     
     /// Save the previous brush for Apple Pencil interaction Switch to previous tool
     private var previousBrush: Brush = .default
@@ -139,8 +149,10 @@ open class SwiftyDrawView: UIView {
         self.backgroundColor = .clear
         // receive pencil interaction if supported
         if #available(iOS 12.1, *) {
+            let pencilInteraction = UIPencilInteraction()
             pencilInteraction.delegate = self
             self.addInteraction(pencilInteraction)
+            self.pencilInteraction = pencilInteraction
         }
     }
     
@@ -150,8 +162,10 @@ open class SwiftyDrawView: UIView {
         self.backgroundColor = .clear
         //Receive pencil interaction if supported
         if #available(iOS 12.1, *) {
+            let pencilInteraction = UIPencilInteraction()
             pencilInteraction.delegate = self
             self.addInteraction(pencilInteraction)
+            self.pencilInteraction = pencilInteraction
         }
     }
     
