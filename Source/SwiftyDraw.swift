@@ -247,6 +247,10 @@ open class SwiftyDrawView: UIView {
     /// touchedEnded implementation to capture strokes
     override open func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard isEnabled, let touch = touches.first else { return }
+        let newPath = createNewPath()
+        if let currentPath = drawItems.last {
+            currentPath.path.addPath(newPath)
+        }
         delegate?.swiftyDraw(didFinishDrawingIn: self, using: touch)
     }
     
